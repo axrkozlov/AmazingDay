@@ -10,4 +10,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+    void test(){
+        for (int i=0;i<10;i++){
+            int a=5;
+            int b=10;
+            int c=0;
+            c=a+b;
+
+        }
+    }
+
 }
