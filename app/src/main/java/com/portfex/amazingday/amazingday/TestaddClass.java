@@ -5,4 +5,5 @@ package com.portfex.amazingday.amazingday;
  */
 
 public class TestaddClass {
+    int abc;
 }
