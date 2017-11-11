@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.portfex.amazingday.amazingday.MainActivity">
+    tools:context="com.portfex.amazingday.amazingday.MainActivity"
+    android:background="@color/background">
 
-    <!--<include layout="@layout/status_bar"/>-->
-
+    <include layout="@layout/status_bar"/>
+    <include layout="@layout/training_item"/>
+    <include layout="@layout/exercise_item"/>
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/rv_exercises"-->
         <!--android:layout_width="match_parent"-->

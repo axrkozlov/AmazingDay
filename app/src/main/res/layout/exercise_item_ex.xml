@@ -41,7 +41,7 @@
 
 
         <TextView
-            android:id="@+id/exercise_desc"
+            android:id="@+id/exercise_desc_full"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/exercise_desc"
@@ -67,7 +67,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginRight="8dp"
-            app:srcCompat="@drawable/ic_expand_more_black_24dp" />
+            app:srcCompat="@drawable/ic_expand_less_black_24dp" />
 
         <ImageView
             android:id="@+id/exercise_status"

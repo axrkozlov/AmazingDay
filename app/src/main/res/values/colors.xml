@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="background">#D3D1D5</color>
 
-
+    <color name="color_training_item">#F7EAD8</color>
 
     <color name="status_digit">#E5DE6E</color>
 
@@ -30,11 +30,11 @@
 
     <color name="buttons_text">#2D2D56</color>
 
-    <color name="color_exercise_item">#E1D3C4</color>
-    <color name="color_active_exercise_item">#ECF7D8</color>
+    <color name="color_exercise_item">#EFDFC4</color>
+    <color name="color_exercise_active_item">#F7EAD8</color>
 
 
-    <color name="primary_text">#212121</color>
+    <color name="primary_text">#312131</color>
     <color name="secondary_text">#727272</color>
     <color name="secondary_white_text">#EEEEEE</color>
 

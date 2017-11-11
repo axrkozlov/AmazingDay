@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="list_item_padding_horizontal">16dp</dimen>
-    <dimen name="loading_indicator_size">42dp</dimen>
-    <dimen name="list_item_high_temperature_margin">12dp</dimen>
-    <dimen name="list_item_padding_vertical">12dp</dimen>
+    <!--<dimen name="list_item_padding_horizontal">16dp</dimen>-->
+    <!--<dimen name="loading_indicator_size">42dp</dimen>-->
+    <!--<dimen name="list_item_high_temperature_margin">12dp</dimen>-->
+    <!--<dimen name="list_item_padding_vertical">12dp</dimen>-->
 
-    <dimen name="small_label_text">8sp</dimen>
-    <dimen name="status_digit">18sp</dimen>
+    <dimen name="small_label_text">12sp</dimen>
+    <dimen name="status_digit">22sp</dimen>
+    <dimen name="title_text">18sp</dimen>
+    <dimen name="title_big_text">24sp</dimen>
+    <dimen name="desc_text">14sp</dimen>
 
 </resources>

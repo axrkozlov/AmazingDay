@@ -1,3 +1,48 @@
 <resources>
     <string name="app_name">Amazing Day</string>
+
+    <string name="lb_total_time">time</string>
+    <string name="lb_rest_time">rest</string>
+
+    <string name="lb_last_result">Last result</string>
+    <string name="lb_standard">Standard</string>
+    <string name="lb_sets">Sets</string>
+    <string name="lb_weight">Weight</string>
+    <string name="lb_rest">Rest</string>
+    <string name="lb_result_time">Result time</string>
+    <string name="lb_set">Set</string>
+    <string name="lb_result_reps">Result reps</string>
+    <string name="lb_kg">kg</string>
+    <string name="lb_reps">r</string>
+
+    <string name="bt_restart">RESTART</string>
+    <string name="bt_start">START</string>
+    <string name="bt_pause">PAUSE</string>
+    <string name="bt_done">DONE</string>
+
+    <string name="total_time">1:15:18</string>
+    <string name="rest_time">5:16</string>
+
+
+
+    <string name="training_title">Mourning Training</string>
+    <string name="training_desc">Horizontal bar, jump, run</string>
+
+
+    <string name="exercise_number">2</string>
+    <string name="exercise_title">Barbell</string>
+    <string name="exercise_desc">Up and high, weight: 11kg. sets 3, reps 115 </string>
+
+    <string name="last_result_time">40r 1:24.86</string>
+    <string name="standard">40r 1:24</string>
+    <string name="sets">3</string>
+    <string name="weight">50</string>
+    <string name="rest">3:30</string>
+    <string name="result_time">24:29</string>
+    <string name="result_time_ms">59</string>
+    <string name="set">2</string>
+    <string name="result_reps">122</string>
+
+
+
 </resources>
