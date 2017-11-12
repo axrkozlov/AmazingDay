@@ -11,6 +11,7 @@
     <include layout="@layout/status_bar"/>
     <include layout="@layout/training_item"/>
     <include layout="@layout/exercise_item"/>
+    <include layout="@layout/exercise_item_ex"/>
     <!--<android.support.v7.widget.RecyclerView-->
         <!--android:id="@+id/rv_exercises"-->
         <!--android:layout_width="match_parent"-->
