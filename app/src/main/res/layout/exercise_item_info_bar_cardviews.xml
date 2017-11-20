@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="2dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_rest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/info_background"
+        app:cardCornerRadius="9dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:contentPaddingLeft="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/card_weight"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lb_info_rest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top|right"
+                android:text="@string/lb_rest"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/info_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/rest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rest"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/info_text" />
+
+
+        </LinearLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/info_background"
+        app:cardCornerRadius="9dp"
+        app:contentPaddingLeft="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/card_sets"
+        app:layout_constraintStart_toEndOf="@id/card_rest">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lb_info_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top|right"
+                android:text="@string/lb_weight"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/info_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weight"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/info_text" />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_sets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/info_background"
+        app:cardCornerRadius="9dp"
+        app:contentPaddingLeft="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/card_standard"
+        app:layout_constraintStart_toEndOf="@id/card_weight">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lb_info_sets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top|right"
+                android:text="@string/lb_sets"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/info_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/sets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sets"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/info_text" />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_standard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/info_background"
+        app:cardCornerRadius="9dp"
+        app:contentPaddingLeft="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/card_last_result"
+        app:layout_constraintStart_toEndOf="@id/card_sets">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lb_info_standard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top|right"
+                android:text="@string/lb_norm_time"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/info_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/standard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/last_result_time"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/info_text" />
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_last_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:cardBackgroundColor="@color/info_background"
+        app:cardCornerRadius="9dp"
+        app:contentPaddingLeft="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/card_standard">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/lb_info_last_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top|right"
+                android:text="@string/lb_last_result"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/info_label"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/last_result_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/last_result_time"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/info_text" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>
