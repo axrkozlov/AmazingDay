@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp"
+
+    >
+
+    <EditText
+        android:id="@+id/training_create_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/training_create_name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/training_create_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/training_create_desc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/training_create_name"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/lb_training_create_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/card_info_label"
+        android:text="@string/lb_training_create_days"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/training_create_desc" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textOff="S"
+        android:textOn="S"
+        android:textColorLink="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
+
+    <ToggleButton
+        android:id="@+id/toggleButton2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textOff="M"
+        android:textOn="M"
+        app:layout_constraintStart_toEndOf="@+id/toggleButton1"
+        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
+    <ToggleButton
+        android:id="@+id/toggleButton3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textOff="T"
+        android:textOn="T"
+        app:layout_constraintStart_toEndOf="@+id/toggleButton2"
+        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time"/>
+    <ToggleButton
+        android:id="@+id/toggleButton4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textOff="W"
+        android:textOn="W"
+        app:layout_constraintStart_toEndOf="@+id/toggleButton3"
+        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time"/>
+    <ToggleButton
+        android:id="@+id/toggleButton5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textOff="T"
+        android:textOn="T"
+        app:layout_constraintStart_toEndOf="@+id/toggleButton4"
+        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
+    <ToggleButton
+        android:id="@+id/toggleButton6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textOff="F"
+        android:textOn="F"
+        app:layout_constraintStart_toEndOf="@+id/toggleButton5"
+        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time"/>
+    <ToggleButton
+        android:id="@+id/toggleButton7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:textOff="S"
+        android:textOn="S"
+        app:layout_constraintStart_toEndOf="@+id/toggleButton6"
+        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
+
+    <TextView
+        android:id="@+id/lb_training_create_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lb_training_create_start_time"
+        android:textAppearance="@style/card_info_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/training_create_desc" />
+
+    <TextView
+        android:id="@+id/training_create_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12:40"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lb_training_create_start_time" />
+
+    <Button
+        android:id="@+id/bt_training_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:onClick="addTraining"
+        android:text="@string/lb_training_create_button"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
+        app:layout_constraintTop_toBottomOf="@+id/training_create_start_time"/>
+</android.support.constraint.ConstraintLayout>

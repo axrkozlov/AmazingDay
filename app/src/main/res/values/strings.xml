@@ -58,4 +58,15 @@
     <string name="last_result_reps">40</string>
     <string name="title_activity_main2">Main2Activity</string>
 
+    <string name="lb_training_create_days">Training Days</string>
+    <string name="lb_training_create_start_time">Start at</string>
+    <string name="lb_training_create_button">Add</string>
+
+    <string name="training_create_name">Name of Workout</string>
+    <string name="training_create_desc">Any description</string>
+
+
+
+
+
 </resources>

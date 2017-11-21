@@ -4,10 +4,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.ParseException;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.portfex.amazingday.amazingday.R;
 import com.portfex.amazingday.amazingday.data.TrainingContract;
@@ -24,6 +26,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
     private Context mContext;
 
     public TrainingAdapter(Context context, Cursor cursor) {
+
         this.mContext = context;
         this.mCursor = cursor;
     }
@@ -34,6 +37,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.training_item, parent, false);
         TrainingViewHolder  viewHolder = new TrainingViewHolder(view);
+
         return viewHolder;
 
     }
@@ -47,13 +51,11 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
 
         String name = mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME));
         String desc = mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION));
-
-        long startTime = mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME));
-
-        Date lastDate=new Date(startTime);
+        long id = mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry._ID));
 
         holder.nameView.setText(name);
-        holder.descView.setText(desc+";"+lastDate.toString());
+        holder.descView.setText(desc);
+        holder.itemView.setTag(id);
 
 
 
@@ -65,15 +67,39 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
         return mCursor.getCount();
     }
 
-    public static class TrainingViewHolder extends RecyclerView.ViewHolder{
+
+
+
+
+    public static class TrainingViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
         TextView nameView;
         TextView descView;
         public TrainingViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnLongClickListener(this);
             nameView = itemView.findViewById(R.id.training_title);
             descView = itemView.findViewById(R.id.training_desc);
         }
+
+        @Override
+        public boolean onLongClick(View v) {
+            int adapterPosition = getAdapterPosition();
+
+            long id = (long) itemView.getTag();
+
+            Toast.makeText(v.getContext(), adapterPosition+"-pos, "+ id+"-id : I'm cklicked", Toast.LENGTH_SHORT).show();
+            return true;
+        }
     }
+
+    public void swapCursor(Cursor newCursor) {
+        if (mCursor != null) mCursor.close();
+        mCursor = newCursor;
+        if (newCursor != null) {
+            this.notifyDataSetChanged();
+        }
+    }
+
 }
 
 

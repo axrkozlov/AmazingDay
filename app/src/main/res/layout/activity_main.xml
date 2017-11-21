@@ -26,7 +26,7 @@
         <include android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:elevation="26dp"
-            layout="@layout/status_bar" />
+            layout="@layout/activity_exercises_status_bar" />
 
    </android.support.design.widget.AppBarLayout>
 
