@@ -40,6 +40,73 @@
             app:layout_constraintTop_toBottomOf="@+id/training_title" />
 
 
+        <TextView
+            android:id="@+id/lb_training_desc_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lb_training_desc_total_time"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/small_label_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/training_desc" />
+
+        <TextView
+            android:id="@+id/training_desc_total_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/training_desc_total_time"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/small_label_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lb_training_desc_total_time"
+            app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_desc_total_time" />
+
+        <TextView
+            android:id="@+id/lb_training_desc_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lb_training_desc_days"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/small_label_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lb_training_desc_total_time" />
+
+        <TextView
+            android:id="@+id/training_desc_days"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:text="@string/training_desc_days"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/small_label_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lb_training_desc_days"
+            app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_desc_days"  />
+
+        <TextView
+            android:id="@+id/lb_training_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lb_training_desc_start_time"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/small_label_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lb_training_desc_days" />
+
+        <TextView
+            android:id="@+id/training_desc_start_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:text="@string/training_desc_start_time"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/small_label_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lb_training_start_time"
+            app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_start_time"  />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

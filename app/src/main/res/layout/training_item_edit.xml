@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/training_create_desc" />
 
     <ToggleButton
-        android:id="@+id/tb_sun"
+        android:id="@+id/tb_day1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -51,10 +51,10 @@
         android:textOn="S"
         android:textColorLink="@color/colorAccent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
+        app:layout_constraintBottom_toBottomOf="@+id/bt_training_create_start_time" />
 
     <ToggleButton
-        android:id="@+id/tb_mon"
+        android:id="@+id/tb_day2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -62,10 +62,10 @@
         android:minWidth="0dp"
         android:textOff="M"
         android:textOn="M"
-        app:layout_constraintStart_toEndOf="@+id/tb_sun"
-        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
+        app:layout_constraintStart_toEndOf="@+id/tb_day1"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_training_create_start_time" />
     <ToggleButton
-        android:id="@+id/tb_tue"
+        android:id="@+id/tb_day3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -73,10 +73,10 @@
         android:minWidth="0dp"
         android:textOff="T"
         android:textOn="T"
-        app:layout_constraintStart_toEndOf="@+id/tb_mon"
-        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time"/>
+        app:layout_constraintStart_toEndOf="@+id/tb_day2"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_training_create_start_time"/>
     <ToggleButton
-        android:id="@+id/tb_wed"
+        android:id="@+id/tb_day4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -84,10 +84,10 @@
         android:minWidth="0dp"
         android:textOff="W"
         android:textOn="W"
-        app:layout_constraintStart_toEndOf="@+id/tb_tue"
-        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time"/>
+        app:layout_constraintStart_toEndOf="@+id/tb_day3"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_training_create_start_time"/>
     <ToggleButton
-        android:id="@+id/tb_thu"
+        android:id="@+id/tb_day5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -95,10 +95,10 @@
         android:minWidth="0dp"
         android:textOff="T"
         android:textOn="T"
-        app:layout_constraintStart_toEndOf="@+id/tb_wed"
-        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
+        app:layout_constraintStart_toEndOf="@+id/tb_day4"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_training_create_start_time" />
     <ToggleButton
-        android:id="@+id/tb_fri"
+        android:id="@+id/tb_day6"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -106,10 +106,10 @@
         android:minWidth="0dp"
         android:textOff="F"
         android:textOn="F"
-        app:layout_constraintStart_toEndOf="@+id/tb_thu"
-        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time"/>
+        app:layout_constraintStart_toEndOf="@+id/tb_day5"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_training_create_start_time"/>
     <ToggleButton
-        android:id="@+id/tb_sat"
+        android:id="@+id/tb_day7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -117,8 +117,8 @@
         android:minWidth="0dp"
         android:textOff="S"
         android:textOn="S"
-        app:layout_constraintStart_toEndOf="@+id/tb_fri"
-        app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
+        app:layout_constraintStart_toEndOf="@+id/tb_day6"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_training_create_start_time" />
 
     <TextView
         android:id="@+id/lb_training_create_start_time"
@@ -128,15 +128,28 @@
         android:textAppearance="@style/card_info_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/training_create_desc" />
-
-    <TextView
-        android:id="@+id/training_create_start_time"
+    <Button
+        android:id="@+id/bt_training_create_start_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="12:40"
+        android:text="@string/training_desc_start_time"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:onClick="showTimePickerDialog"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:background="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lb_training_create_start_time" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/training_create_start_time"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="&#45;&#45;:&#45;&#45;"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat.Display1"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/lb_training_create_start_time" />-->
+
 
     <Button
         android:id="@+id/bt_training_action"
@@ -148,5 +161,5 @@
         android:onClick="addTraining"
         android:text="@string/lb_training_create_button"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
-        app:layout_constraintTop_toBottomOf="@+id/training_create_start_time"/>
+        app:layout_constraintTop_toBottomOf="@+id/bt_training_create_start_time"/>
 </android.support.constraint.ConstraintLayout>

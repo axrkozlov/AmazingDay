@@ -4,6 +4,11 @@
     <string name="lb_total_time">time</string>
     <string name="lb_rest_time">rest</string>
 
+    <string name="lb_training_desc_total_time">Total time:</string>
+    <string name="lb_training_desc_days">Days:</string>
+    <string name="lb_training_desc_start_time">Start time:</string>
+
+
     <string name="lb_last_result">Last result</string>
     <string name="lb_norm_reps">Reps</string>
     <string name="lb_norm_time">Norm time</string>
@@ -17,6 +22,8 @@
     <string name="lb_kg">kg</string>
     <string name="lb_x">x</string>
     <string name="lb_reps">r</string>
+
+
 
     <string name="bt_restart">RESTART</string>
     <string name="bt_start">START</string>
@@ -36,6 +43,9 @@
 
     <string name="training_title">Mourning Training</string>
     <string name="training_desc">Horizontal bar, jump, run</string>
+    <string name="training_desc_total_time">1:20</string>
+    <string name="training_desc_days">Mon Wed</string>
+    <string name="training_desc_start_time">--:--</string>
 
 
     <string name="exercise_number">2</string>
@@ -64,8 +74,6 @@
 
     <string name="training_create_name">Name of Workout</string>
     <string name="training_create_desc">Any description</string>
-
-
 
 
 
