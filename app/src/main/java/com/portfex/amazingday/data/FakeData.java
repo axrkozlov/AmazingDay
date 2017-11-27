@@ -1,4 +1,4 @@
-package com.portfex.amazingday.amazingday.data;
+package com.portfex.amazingday.data;
 
 import android.content.ContentValues;
 import android.database.SQLException;
@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ParseException;
 import android.util.Log;
 
-import com.portfex.amazingday.amazingday.data.TrainingContract.*;
+import com.portfex.amazingday.data.TrainingContract.*;
 
 import java.util.Date;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by alexanderkozlov on 11/18/17.
  */
 
-public class TestData {
+public class FakeData {
 
     public static void insertFakeData(SQLiteDatabase db) {
         if (db == null) {
@@ -45,7 +45,7 @@ public class TestData {
 
         cv.put(TrainingEntry.TRAININGS_COLUMN_NAME, "Jump");
         cv.put(TrainingEntry.TRAININGS_COLUMN_DESCRIPTION, "With dumbbell behind the head, with straight back");
-        cv.put(TrainingEntry.TRAININGS_COLUMN_REPEAT, "1 per 2 day");
+        cv.put(TrainingEntry.TRAININGS_COLUMN_REPEAT, "1");
         cv.put(TrainingEntry.TRAININGS_COLUMN_START_TIME, lastDate_ms);
         cv.put(TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME, lastDate_ms);
         cv.put(TrainingEntry.TRAININGS_COLUMN_LAST_DATE,  lastDate_ms);
@@ -54,7 +54,7 @@ public class TestData {
         cv = new ContentValues();
         cv.put(TrainingEntry.TRAININGS_COLUMN_NAME, "ChestUp");
         cv.put(TrainingEntry.TRAININGS_COLUMN_DESCRIPTION, "Complete workouts designed to build the lower, middle and upper chest");
-        cv.put(TrainingEntry.TRAININGS_COLUMN_REPEAT, "1 per 2 day");
+        cv.put(TrainingEntry.TRAININGS_COLUMN_REPEAT, "1");
         cv.put(TrainingEntry.TRAININGS_COLUMN_START_TIME, lastDate_ms);
         cv.put(TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME, lastDate_ms);
         cv.put(TrainingEntry.TRAININGS_COLUMN_LAST_DATE,  lastDate_ms);
@@ -63,7 +63,7 @@ public class TestData {
         cv = new ContentValues();
         cv.put(TrainingEntry.TRAININGS_COLUMN_NAME, "Triceps Workout");
         cv.put(TrainingEntry.TRAININGS_COLUMN_DESCRIPTION, "If you want big arms you need to build your triceps");
-        cv.put(TrainingEntry.TRAININGS_COLUMN_REPEAT, "1 per 2 day");
+        cv.put(TrainingEntry.TRAININGS_COLUMN_REPEAT, "1");
         cv.put(TrainingEntry.TRAININGS_COLUMN_START_TIME, lastDate_ms);
         cv.put(TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME, lastDate_ms);
         cv.put(TrainingEntry.TRAININGS_COLUMN_LAST_DATE,  lastDate_ms);

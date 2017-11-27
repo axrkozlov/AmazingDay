@@ -1,4 +1,4 @@
-package com.portfex.amazingday.amazingday.data;
+package com.portfex.amazingday.data;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
  */
 
 public class TrainingContract {
-    public static final String CONTENT_AUTHORITY = "com.portfex.amazingday.amazingday";
+    public static final String CONTENT_AUTHORITY = "com.portfex.amazingday";
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
@@ -16,8 +16,7 @@ public class TrainingContract {
 
     public static final class TrainingEntry implements BaseColumns {
 
-        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRAINING).build();
-
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRAINING).build();
 
 
         public static final String TRAININGS_TABLE_NAME = "trainings";
@@ -33,8 +32,6 @@ public class TrainingContract {
         public static final String TRAININGS_COLUMN_TOTAL_TIME = "total_time";
 
         public static final String TRAININGS_COLUMN_LAST_DATE = "last_date";
-
-
 
 
         public static final String EXERCISES_TABLE_NAME = "exercises";
@@ -60,7 +57,6 @@ public class TrainingContract {
         TODO results table
 
       */
-
 
 
     }

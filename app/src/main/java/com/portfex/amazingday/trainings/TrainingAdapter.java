@@ -1,20 +1,19 @@
-package com.portfex.amazingday.amazingday.Training;
+package com.portfex.amazingday.trainings;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.net.ParseException;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.portfex.amazingday.amazingday.R;
-import com.portfex.amazingday.amazingday.data.TrainingContract;
+import com.portfex.amazingday.R;
+import com.portfex.amazingday.data.TrainingContract;
+import com.portfex.amazingday.utilites.DateUtils;
 
-import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * Created by alexanderkozlov on 11/16/17.
@@ -51,11 +50,19 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
 
         String name = mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME));
         String desc = mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION));
+        Integer repeat = mCursor.getInt(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT));
+
         long id = mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry._ID));
 
         holder.nameView.setText(name);
-        holder.descView.setText(desc);
+        holder.descView.setText(desc +" repeat:"+ repeat);
         holder.itemView.setTag(id);
+        ArrayList<Boolean> weekDays = DateUtils.parseWeekDays(repeat);
+        for (Boolean weekday:weekDays
+             ) {
+            
+        }
+
 
 
 

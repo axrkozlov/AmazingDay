@@ -1,4 +1,4 @@
-package com.portfex.amazingday.amazingday;
+package com.portfex.amazingday;
 
 import org.junit.Test;
 

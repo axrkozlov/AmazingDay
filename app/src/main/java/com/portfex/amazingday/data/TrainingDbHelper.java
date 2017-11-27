@@ -1,9 +1,9 @@
-package com.portfex.amazingday.amazingday.data;
+package com.portfex.amazingday.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.portfex.amazingday.amazingday.data.TrainingContract.*;
+import com.portfex.amazingday.data.TrainingContract.*;
 
 /**
  * Created by alexanderkozlov on 11/18/17.
@@ -27,7 +27,7 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
                 TrainingEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 TrainingEntry.TRAININGS_COLUMN_NAME + " TEXT NOT NULL, " +
                 TrainingEntry.TRAININGS_COLUMN_DESCRIPTION + " TEXT, " +
-                TrainingEntry.TRAININGS_COLUMN_REPEAT + " TEXT, " +
+                TrainingEntry.TRAININGS_COLUMN_REPEAT + " INTEGER, " +
                 TrainingEntry.TRAININGS_COLUMN_START_TIME + " TIMESTAMP, " +
                 TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME + " TIMESTAMP, " +
                 TrainingEntry.TRAININGS_COLUMN_LAST_DATE + " TIMESTAMP" +

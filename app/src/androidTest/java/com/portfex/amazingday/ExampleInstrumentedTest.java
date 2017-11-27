@@ -1,4 +1,4 @@
-package com.portfex.amazingday.amazingday;
+package com.portfex.amazingday;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.portfex.amazingday.amazingday", appContext.getPackageName());
+        assertEquals("com.portfex.amazingday", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.portfex.amazingday.amazingday.Exercise;
+package com.portfex.amazingday.exercises;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.portfex.amazingday.amazingday.R;
+import com.portfex.amazingday.R;
 
 public class ExercisesActivity extends AppCompatActivity {
 

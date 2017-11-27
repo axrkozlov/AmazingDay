@@ -1,17 +1,14 @@
-package com.portfex.amazingday.amazingday.Training;
+package com.portfex.amazingday.trainings;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ParseException;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,15 +16,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
-import com.portfex.amazingday.amazingday.R;
-import com.portfex.amazingday.amazingday.Training.TrainingAdapter;
-import com.portfex.amazingday.amazingday.data.TestData;
-import com.portfex.amazingday.amazingday.data.TrainingContract;
-import com.portfex.amazingday.amazingday.data.TrainingDbHelper;
+import com.portfex.amazingday.R;
+import com.portfex.amazingday.data.FakeData;
+import com.portfex.amazingday.data.TrainingContract;
+import com.portfex.amazingday.data.TrainingDbHelper;
+import com.portfex.amazingday.utilites.DateUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDb = dbh.getWritableDatabase();
 
-        //TestData.insertFakeData(mDb);
+        FakeData.insertFakeData(mDb);
 
 
         Cursor cursor = getAllTrainings();
@@ -81,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
             mTrainingItemCreateDialogView = getLayoutInflater().inflate(R.layout.training_item_create, null);
 
-            Button bt_create=mTrainingItemCreateDialogView.findViewById(R.id.bt_training_action);
+            Button bt_create = mTrainingItemCreateDialogView.findViewById(R.id.bt_training_action);
             bt_create.setText("Create");
 
             mBuilder.setView(mTrainingItemCreateDialogView);
 
-            mTrainingCreateDialog= mBuilder.create();
+            mTrainingCreateDialog = mBuilder.create();
             mTrainingCreateDialog.show();
 
 
@@ -117,14 +116,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addTraining(View view) {
-        EditText mTrainingCreateName =mTrainingItemCreateDialogView.findViewById(R.id.training_create_name);
-        EditText mTrainingCreateDesc =mTrainingItemCreateDialogView.findViewById(R.id.training_create_desc);
+        EditText mTrainingCreateName = mTrainingItemCreateDialogView.findViewById(R.id.training_create_name);
+        EditText mTrainingCreateDesc = mTrainingItemCreateDialogView.findViewById(R.id.training_create_desc);
+        ToggleButton sun = mTrainingItemCreateDialogView.findViewById(R.id.tb_sun);
+        ToggleButton mon = mTrainingItemCreateDialogView.findViewById(R.id.tb_mon);
+        ToggleButton tue = mTrainingItemCreateDialogView.findViewById(R.id.tb_tue);
+        ToggleButton wed = mTrainingItemCreateDialogView.findViewById(R.id.tb_wed);
+        ToggleButton thu = mTrainingItemCreateDialogView.findViewById(R.id.tb_thu);
+        ToggleButton fri = mTrainingItemCreateDialogView.findViewById(R.id.tb_fri);
+        ToggleButton sat = mTrainingItemCreateDialogView.findViewById(R.id.tb_sat);
+        JSONObject jsonWeekDays = new JSONObject();
 
-        if (mTrainingCreateName.getText().length() == 0) {
-            Toast.makeText(this, "Please, insert Name of Workout", Toast.LENGTH_SHORT).show();
+        ArrayList<Boolean> weekDays = new ArrayList<>();
+        weekDays.add(sun.isChecked());
+        weekDays.add(mon.isChecked());
+        weekDays.add(tue.isChecked());
+        weekDays.add(wed.isChecked());
+        weekDays.add(thu.isChecked());
+        weekDays.add(fri.isChecked());
+        weekDays.add(sat.isChecked());
+
+        int composedWeekDays = DateUtils.composeWeekDays(weekDays);
+
+        if (mTrainingCreateName.getText().
+
+                length() == 0)
+
+        {
+            Toast.makeText(this, "Please, insert Name of workout", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (mDb == null) {
+        if (mDb == null)
+
+        {
             return;
         }
 
@@ -132,25 +156,39 @@ public class MainActivity extends AppCompatActivity {
 
         ContentValues cv = new ContentValues();
 
-        cv.put(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME, mTrainingCreateName.getText().toString());
-        cv.put(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION, mTrainingCreateDesc.getText().toString());
+        cv.put(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME, mTrainingCreateName.getText().
+
+                toString());
+        cv.put(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION, mTrainingCreateDesc.getText().
+
+                toString());
+        cv.put(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT, composedWeekDays);
         list.add(cv);
 
 
-        try {
+        try
+
+        {
             mDb.beginTransaction();
             for (ContentValues c : list) {
                 mDb.insert(TrainingContract.TrainingEntry.TRAININGS_TABLE_NAME, null, c);
             }
             mDb.setTransactionSuccessful();
-        } catch (SQLException e) {
+        } catch (
+                SQLException e)
+
+        {
             e.printStackTrace();
-        } finally {
+        } finally
+
+        {
             mDb.endTransaction();
             mTrainingCreateDialog.dismiss();
         }
 
-        mTrainingAdapter.swapCursor(getAllTrainings());
+        mTrainingAdapter.swapCursor(
+
+                getAllTrainings());
 
     }
 }

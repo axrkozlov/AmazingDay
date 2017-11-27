@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/training_create_desc" />
 
     <ToggleButton
-        android:id="@+id/toggleButton1"
+        android:id="@+id/tb_sun"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -54,7 +54,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
 
     <ToggleButton
-        android:id="@+id/toggleButton2"
+        android:id="@+id/tb_mon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -62,10 +62,10 @@
         android:minWidth="0dp"
         android:textOff="M"
         android:textOn="M"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton1"
+        app:layout_constraintStart_toEndOf="@+id/tb_sun"
         app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
     <ToggleButton
-        android:id="@+id/toggleButton3"
+        android:id="@+id/tb_tue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -73,10 +73,10 @@
         android:minWidth="0dp"
         android:textOff="T"
         android:textOn="T"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton2"
+        app:layout_constraintStart_toEndOf="@+id/tb_mon"
         app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time"/>
     <ToggleButton
-        android:id="@+id/toggleButton4"
+        android:id="@+id/tb_wed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -84,10 +84,10 @@
         android:minWidth="0dp"
         android:textOff="W"
         android:textOn="W"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton3"
+        app:layout_constraintStart_toEndOf="@+id/tb_tue"
         app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time"/>
     <ToggleButton
-        android:id="@+id/toggleButton5"
+        android:id="@+id/tb_thu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -95,10 +95,10 @@
         android:minWidth="0dp"
         android:textOff="T"
         android:textOn="T"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton4"
+        app:layout_constraintStart_toEndOf="@+id/tb_wed"
         app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
     <ToggleButton
-        android:id="@+id/toggleButton6"
+        android:id="@+id/tb_fri"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -106,10 +106,10 @@
         android:minWidth="0dp"
         android:textOff="F"
         android:textOn="F"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton5"
+        app:layout_constraintStart_toEndOf="@+id/tb_thu"
         app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time"/>
     <ToggleButton
-        android:id="@+id/toggleButton7"
+        android:id="@+id/tb_sat"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
@@ -117,7 +117,7 @@
         android:minWidth="0dp"
         android:textOff="S"
         android:textOn="S"
-        app:layout_constraintStart_toEndOf="@+id/toggleButton6"
+        app:layout_constraintStart_toEndOf="@+id/tb_fri"
         app:layout_constraintBottom_toBottomOf="@+id/training_create_start_time" />
 
     <TextView
