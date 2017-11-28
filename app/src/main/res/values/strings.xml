@@ -70,10 +70,15 @@
 
     <string name="lb_training_create_days">Training Days</string>
     <string name="lb_training_create_start_time">Start at</string>
-    <string name="lb_training_create_button">Add</string>
+    <string name="lb_training_create_button">Create</string>
+    <string name="lb_training_update_button">Update</string>
+    <string name="lb_training_duplicate_button">Duplicate</string>
+
+    <string name="lb_training_delete_button">Remove</string>
 
     <string name="training_create_name">Name of Workout</string>
     <string name="training_create_desc">Any description</string>
+
 
 
 

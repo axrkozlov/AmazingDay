@@ -27,23 +27,38 @@ public final class DateUtils {
         return result;
     }
 
-    public static Long normalizeTimeFromString(String time) {
+    public static Long getTimeMillis(String time) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         if (time.length() == 0) {
-            return 0l;
+            return 0L;
         }
 
         try {
             Date date = dateFormat.parse(time);
-            Log.e("TIME_PARSE", "ToBase:" + date.toString());
             return date.getTime();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return 0l;
+        return 0L;
     }
+//    public static String normalizeTimeString(String time) {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+//        if (time.length() == 0) {
+//            return "";
+//        }
+//
+//        try {
+//            Date date = dateFormat.parse(time);
+//            return date.getTime();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return 0L;
+//    }
 
     public static String getTimeString(Long time_ms) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -53,7 +68,6 @@ public final class DateUtils {
 
         try {
             Date date = new Date(time_ms);
-            Log.e("TIME_PARSE", "fromBase:" + dateFormat.format(date).toString());
             return dateFormat.format(date).toString();
 
         } catch (Exception e) {

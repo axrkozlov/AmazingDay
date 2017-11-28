@@ -8,8 +8,8 @@
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
     android:layout_marginTop="6dp"
-    app:contentPadding="8dp"
-    app:cardBackgroundColor="@color/training_item">
+    app:cardBackgroundColor="@color/training_item"
+    app:contentPadding="8dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,6 +24,7 @@
             android:text="@string/training_title"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/title_text"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +36,7 @@
             android:text="@string/training_desc"
             android:textColor="@color/secondary_text"
             android:textSize="@dimen/small_label_text"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/training_title" />
@@ -44,6 +46,9 @@
             android:id="@+id/lb_training_desc_total_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
             android:text="@string/lb_training_desc_total_time"
             android:textColor="@color/secondary_text"
             android:textSize="@dimen/small_label_text"
@@ -57,14 +62,16 @@
             android:text="@string/training_desc_total_time"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/small_label_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_desc_total_time"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/lb_training_desc_total_time"
-            app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_desc_total_time" />
+            app:layout_constraintStart_toEndOf="@+id/lb_training_desc_total_time" />
 
         <TextView
             android:id="@+id/lb_training_desc_days"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="@string/lb_training_desc_days"
             android:textColor="@color/secondary_text"
             android:textSize="@dimen/small_label_text"
@@ -75,19 +82,21 @@
             android:id="@+id/training_desc_days"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:text="@string/training_desc_days"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/small_label_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_desc_days"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/lb_training_desc_days"
-            app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_desc_days"  />
+            app:layout_constraintStart_toEndOf="@+id/lb_training_desc_days" />
 
         <TextView
             android:id="@+id/lb_training_start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:text="@string/lb_training_desc_start_time"
             android:textColor="@color/secondary_text"
             android:textSize="@dimen/small_label_text"
@@ -98,14 +107,14 @@
             android:id="@+id/training_desc_start_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:text="@string/training_desc_start_time"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/small_label_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_start_time"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/lb_training_start_time"
-            app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_start_time"  />
+            app:layout_constraintStart_toEndOf="@+id/lb_training_start_time" />
 
     </android.support.constraint.ConstraintLayout>
 

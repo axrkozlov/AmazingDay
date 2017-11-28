@@ -2,10 +2,12 @@ package com.portfex.amazingday.trainings;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
 
     private Cursor mCursor;
     private Context mContext;
+    View mTrainingItemCreateDialogView;
 
     public TrainingAdapter(Context context, Cursor cursor) {
 
@@ -48,8 +51,6 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
 
         if (!mCursor.moveToPosition(position)) return;
 
-
-
         String name = mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME));
         String desc = mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION));
         Integer repeat = mCursor.getInt(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT));
@@ -68,19 +69,13 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
             }
         }
 
-
         String descStartTimeText=DateUtils.getTimeString(descStartTime);
-
-
-
-
 
         holder.nameView.setText(name);
         holder.descView.setText(desc);
         holder.descDaysView.setText(descTrainingDays);
         holder.descStartTimeView.setText(descStartTimeText);
         holder.itemView.setTag(id);
-
 
         //holder.listItemNumberView.setText(Integer.toString(position));
     }
@@ -89,10 +84,6 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
     public int getItemCount() {
         return mCursor.getCount();
     }
-
-
-
-
 
     public static class TrainingViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
         TextView nameView;
@@ -116,7 +107,6 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
             int adapterPosition = getAdapterPosition();
 
             long id = (long) itemView.getTag();
-
 
             Toast.makeText(v.getContext(), adapterPosition+"-pos, "+ id+"-id : I'm cklicked", Toast.LENGTH_SHORT).show();
 
