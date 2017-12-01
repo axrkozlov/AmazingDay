@@ -1,38 +1,34 @@
 package com.portfex.amazingday.trainings;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.portfex.amazingday.Model.TrainingsChangedCallback;
+import com.portfex.amazingday.Model.TrainingItem;
 import com.portfex.amazingday.R;
-import com.portfex.amazingday.data.TrainingContract;
 import com.portfex.amazingday.utilites.DateUtils;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Created by alexanderkozlov on 11/16/17.
  */
 
-public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingViewHolder>{
+public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingViewHolder> implements TrainingsChangedCallback {
 
-    private Cursor mCursor;
+//    private Cursor mCursor;
     private Context mContext;
-    View mTrainingItemCreateDialogView;
+    private ArrayList<TrainingItem> mTrainings;
+    private TrainingOnClickHandler mClickHandler;
 
-    public TrainingAdapter(Context context, Cursor cursor) {
-
+    public TrainingAdapter(Context context,TrainingOnClickHandler clickHandler) {
+        this.mClickHandler=clickHandler;
         this.mContext = context;
-        this.mCursor = cursor;
     }
 
 
@@ -49,78 +45,128 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
     @Override
     public void onBindViewHolder(TrainingViewHolder holder, int position) {
 
-        if (!mCursor.moveToPosition(position)) return;
+        TrainingItem trainingItem = mTrainings.get(position);
+        if (trainingItem == null) {
+            return;
+        }
 
-        String name = mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME));
-        String desc = mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION));
-        Integer repeat = mCursor.getInt(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT));
-        Long descStartTime = mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME));
-
-        long id = mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry._ID));
-
-        String descTrainingDays="";
+        holder.nameView.setText(trainingItem.getName());
+        holder.descView.setText(trainingItem.getDescription());
 
         String[] weekDaysText= DateFormatSymbols.getInstance().getShortWeekdays();
-        ArrayList<Boolean> weekDays = DateUtils.parseWeekDays(repeat);
+        ArrayList<Boolean> weekDays = DateUtils.parseWeekDays(trainingItem.getWeekDaysComposed());
+        StringBuffer sb = new StringBuffer("");
 
         for (int i = 0; i < 7; i++) {
             if (weekDays.get(i)){
-                descTrainingDays+=weekDaysText[i+1]+" ";
+                sb.append( weekDaysText[i+1]+" ");
             }
         }
 
-        String descStartTimeText=DateUtils.getTimeString(descStartTime);
+        holder.daysView.setText(sb.toString());
+        holder.startTimeView.setText(DateUtils.getTimeString(trainingItem.getStartTime()));
+        holder.totalTimeView.setText(DateUtils.getTimeString(trainingItem.getTotalTime()));
+        holder.itemView.setTag(trainingItem.getId());
 
-        holder.nameView.setText(name);
-        holder.descView.setText(desc);
-        holder.descDaysView.setText(descTrainingDays);
-        holder.descStartTimeView.setText(descStartTimeText);
-        holder.itemView.setTag(id);
 
-        //holder.listItemNumberView.setText(Integer.toString(position));
     }
 
     @Override
     public int getItemCount() {
-        return mCursor.getCount();
+        if (mTrainings == null) {
+            return 0;
+        }
+        return mTrainings.size();
     }
 
-    public static class TrainingViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
+    @Override
+    public void updateTrainingsList(ArrayList<TrainingItem> trainings) {
+        this.mTrainings = trainings;
+        if (mTrainings != null) {
+            this.notifyDataSetChanged();
+        }
+    }
+
+    class TrainingViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView nameView;
         TextView descView;
-        TextView descTotalTimeView;
-        TextView descDaysView;
-        TextView descStartTimeView;
+        TextView totalTimeView;
+        TextView daysView;
+        TextView startTimeView;
+
         public TrainingViewHolder(View itemView) {
             super(itemView);
             itemView.setOnLongClickListener(this);
+            itemView.setOnClickListener(this);
             nameView = itemView.findViewById(R.id.training_title);
             descView = itemView.findViewById(R.id.training_desc);
-            descTotalTimeView = itemView.findViewById(R.id.training_desc_total_time);
-            descDaysView = itemView.findViewById(R.id.training_desc_days);
-            descStartTimeView = itemView.findViewById(R.id.training_desc_start_time);
+            totalTimeView = itemView.findViewById(R.id.training_desc_total_time);
+            daysView = itemView.findViewById(R.id.training_desc_days);
+            startTimeView = itemView.findViewById(R.id.training_desc_start_time);
 
         }
 
         @Override
+        public void onClick(View v) {
+            mClickHandler.onClick((long) v.getTag());
+        }
+
+        @Override
         public boolean onLongClick(View v) {
-            int adapterPosition = getAdapterPosition();
 
-            long id = (long) itemView.getTag();
+            mClickHandler.onLongClick((long) v.getTag());
 
-            Toast.makeText(v.getContext(), adapterPosition+"-pos, "+ id+"-id : I'm cklicked", Toast.LENGTH_SHORT).show();
-
+            //int adapterPosition = getAdapterPosition();
+            //Toast.makeText(v.getContext(), adapterPosition+"-pos", Toast.LENGTH_SHORT).show();
             return true;
         }
     }
 
-    public void swapCursor(Cursor newCursor) {
-        if (mCursor != null) mCursor.close();
-        mCursor = newCursor;
-        if (newCursor != null) {
-            this.notifyDataSetChanged();
-        }
-    }
+
+
+//        @Override
+//        public boolean onLongClick(View v) {
+//            int adapterPosition = getAdapterPosition();
+//
+//            long id = (long) v.getTag();
+//
+//            Toast.makeText(v.getContext(), adapterPosition+"-pos, "+ id+"-id : I'm cklicked", Toast.LENGTH_SHORT).show();
+//            return true;
+//        }
+//    }
+//
+//    public static class TrainingViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
+//        TextView nameView;
+//        TextView descView;
+//        TextView totalTimeView;
+//        TextView daysView;
+//        TextView startTimeView;
+//        public TrainingViewHolder(View itemView) {
+//            super(itemView);
+//            itemView.setOnLongClickListener(this);
+//            nameView = itemView.findViewById(R.id.training_title);
+//            descView = itemView.findViewById(R.id.training_desc);
+//            totalTimeView = itemView.findViewById(R.id.training_desc_total_time);
+//            daysView = itemView.findViewById(R.id.training_desc_days);
+//            startTimeView = itemView.findViewById(R.id.training_desc_start_time);
+//
+//        }
+
+
+//    public void refreshAdapter(ArrayList<TrainingItem> allTrainings) {
+//        this.mTrainings = allTrainings;
+//        if (allTrainings != null) {
+//            this.notifyDataSetChanged();
+//        }
+//    }
+
+//    public void swapCursor(Cursor newCursor) {
+//        if (mCursor != null) mCursor.close();
+//        mCursor = newCursor;
+//        if (newCursor != null) {
+//            this.notifyDataSetChanged();
+//        }
+//    }
 
 }
 

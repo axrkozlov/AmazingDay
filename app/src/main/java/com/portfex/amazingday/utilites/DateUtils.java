@@ -19,9 +19,9 @@ public final class DateUtils {
         return result;
     }
 
-    public static ArrayList<Boolean> parseWeekDays(Integer fromBase) {
+    public static ArrayList<Boolean> parseWeekDays(int fromBase) {
         ArrayList<Boolean> result = new ArrayList<>();
-        for (Integer i = 0; i < 7; ++i) {
+        for (int i = 0; i < 7; ++i) {
             result.add(((fromBase >> i) & 1) == 1);
         }
         return result;

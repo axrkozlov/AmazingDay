@@ -1,46 +1,31 @@
 package com.portfex.amazingday.trainings;
 
-import android.app.TimePickerDialog;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AlertDialog;
+
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
+import com.portfex.amazingday.Model.TrainingItem;
+import com.portfex.amazingday.Model.TrainingManager;
 import com.portfex.amazingday.R;
-import com.portfex.amazingday.data.FakeData;
-import com.portfex.amazingday.data.TrainingContract;
-import com.portfex.amazingday.data.TrainingDbHelper;
-import com.portfex.amazingday.utilites.DateUtils;
 
-import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TrainingOnClickHandler {
 
     private RecyclerView mTrainingRecyclerView;
 
-
-
-TrainingManager trainingManager;
+    TrainingManager mTrainingManager;
+    TrainingAdapter mTrainingAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +39,17 @@ TrainingManager trainingManager;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mTrainingRecyclerView.setLayoutManager(layoutManager);
         mTrainingRecyclerView.setHasFixedSize(true);
-        trainingManager=new TrainingManager(this);
-        mTrainingRecyclerView.setAdapter(trainingManager.getTrainingAdapter());
+
+        mTrainingManager = TrainingManager.getInstance(getApplicationContext());
+
+        mTrainingAdapter = new TrainingAdapter(this,this);
+
+        mTrainingManager.setCallback(mTrainingAdapter);
+
+        mTrainingRecyclerView.setAdapter(mTrainingAdapter);
+
+        mTrainingManager.updateTrainingsView();
+
 
     }
 
@@ -71,10 +65,10 @@ TrainingManager trainingManager;
         int id = item.getItemId();
 
         if (id == R.id.main_add) {
-            trainingManager.showCreateTrainingDialog();
+            showEditDialog(0);
 
-
-            //startActivity(new Intent(this, SettingsActivity.class));
+            //trainingManager.showCreateTrainingDialog();
+           //startActivity(new Intent(this, SettingsActivity.class));
             return true;
 
         } else if (id == R.id.menu_settings) {
@@ -83,12 +77,53 @@ TrainingManager trainingManager;
         return super.onOptionsItemSelected(item);
     }
 
+//
+//    @Override
+//    public boolean onLongClick(View v) {
+//
+//        long id = (long) v.getTag();
+//
+//        Toast.makeText(v.getContext(),  id+"-id : I'm cklicked", Toast.LENGTH_SHORT).show();
+//        return true;
+//    }
+
+    private void showEditDialog(long id){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        DialogFragment newFragment = TrainingEditDialog.newInstance();
+        if (id>0) {
+            Bundle bundle = new Bundle();
+            bundle.putLong("id", id);
+            newFragment.setArguments(bundle);
+        }
+        newFragment.show(ft, "dialog");
+
+    }
 
 
 
+    @Override
+    public void onClick(long id) {
+        TrainingItem trainingItem= mTrainingManager.getTraining(id);
 
+        Toast.makeText(this, id+"-id : name" + trainingItem.getName(), Toast.LENGTH_SHORT).show();
 
+    }
 
+    @Override
+    public void onLongClick(long id) {
+        TrainingItem trainingItem= mTrainingManager.getTraining(id);
 
+        if (trainingItem == null) {
+            return;
+        }
+        showEditDialog(id);
 
+        //Toast.makeText(this, id+"-id : longclick name " + trainingItem.getName(), Toast.LENGTH_SHORT).show();
+    }
 }
