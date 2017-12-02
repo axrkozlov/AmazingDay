@@ -1,7 +1,6 @@
 package com.portfex.amazingday.trainings;
 
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,7 +15,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.portfex.amazingday.Model.TrainingItem;
-import com.portfex.amazingday.Model.TrainingManager;
 import com.portfex.amazingday.R;
 
 
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements TrainingOnClickHa
         mTrainingRecyclerView.setLayoutManager(layoutManager);
         mTrainingRecyclerView.setHasFixedSize(true);
 
-        mTrainingManager = TrainingManager.getInstance(getApplicationContext());
+        mTrainingManager = TrainingManager.getInstance();
 
         mTrainingAdapter = new TrainingAdapter(this,this);
 
@@ -48,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements TrainingOnClickHa
 
         mTrainingRecyclerView.setAdapter(mTrainingAdapter);
 
-        mTrainingManager.updateTrainingsView();
+        //mTrainingManager.updateTrainingsView();
+        //getSupportLoaderManager().initLoader(TrainingManager.ID_TRAININGS_LOADER, null, this);
 
 
     }
@@ -126,4 +125,7 @@ public class MainActivity extends AppCompatActivity implements TrainingOnClickHa
 
         //Toast.makeText(this, id+"-id : longclick name " + trainingItem.getName(), Toast.LENGTH_SHORT).show();
     }
+
+
+
 }

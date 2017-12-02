@@ -1,7 +1,6 @@
 package com.portfex.amazingday.trainings;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.support.v4.app.DialogFragment;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.portfex.amazingday.Model.TrainingItem;
-import com.portfex.amazingday.Model.TrainingManager;
 import com.portfex.amazingday.R;
 import com.portfex.amazingday.utilites.DateUtils;
 
@@ -64,7 +62,7 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
         mTrainingCreateView = inflater.inflate(R.layout.training_item_edit, null);
-        trainingManager=TrainingManager.getInstance(getActivity().getApplicationContext());
+        trainingManager=TrainingManager.getInstance();
 
         startTimeChanged = false;
         mEditCreate = mTrainingCreateView.findViewById(R.id.bt_training_create);

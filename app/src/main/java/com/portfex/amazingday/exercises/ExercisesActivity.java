@@ -26,6 +26,7 @@ public class ExercisesActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
     }
 
 }

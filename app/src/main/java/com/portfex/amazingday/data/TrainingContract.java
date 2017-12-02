@@ -12,11 +12,11 @@ public class TrainingContract {
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    public static final String PATH_TRAINING = "training";
+    public static final String PATH_TRAININGS = "training";
 
     public static final class TrainingEntry implements BaseColumns {
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRAINING).build();
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_TRAININGS).build();
 
 
         public static final String TRAININGS_TABLE_NAME = "trainings";

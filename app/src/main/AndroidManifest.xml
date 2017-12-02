@@ -20,7 +20,10 @@
             android:name=".exercises.ExercisesActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar"/>
-
+        <provider
+            android:name=".data.TrainingProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false"/>
     </application>
 
 </manifest>
