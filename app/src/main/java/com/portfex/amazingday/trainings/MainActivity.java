@@ -5,6 +5,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
+import android.support.v4.app.LoaderManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,12 +17,19 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.portfex.amazingday.Model.TrainingItem;
+import com.portfex.amazingday.Model.TrainingManager;
 import com.portfex.amazingday.R;
+import com.portfex.amazingday.data.TrainingLoader;
+
+import java.util.ArrayList;
+
+import static com.portfex.amazingday.Model.TrainingManager.ID_LOADER;
 
 
-public class MainActivity extends AppCompatActivity implements TrainingOnClickHandler {
+public class MainActivity extends AppCompatActivity implements TrainingOnClickHandler, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mTrainingRecyclerView;
+
 
     TrainingManager mTrainingManager;
     TrainingAdapter mTrainingAdapter;
@@ -38,19 +47,17 @@ public class MainActivity extends AppCompatActivity implements TrainingOnClickHa
         mTrainingRecyclerView.setLayoutManager(layoutManager);
         mTrainingRecyclerView.setHasFixedSize(true);
 
-        mTrainingManager = TrainingManager.getInstance();
+        mTrainingAdapter = new TrainingAdapter(this, this);
+        mTrainingManager = TrainingManager.getInstance(getApplicationContext());
 
-        mTrainingAdapter = new TrainingAdapter(this,this);
+        getSupportLoaderManager().initLoader(ID_LOADER, Bundle.EMPTY, mTrainingManager);
 
         mTrainingManager.setCallback(mTrainingAdapter);
-
         mTrainingRecyclerView.setAdapter(mTrainingAdapter);
 
-        //mTrainingManager.updateTrainingsView();
-        //getSupportLoaderManager().initLoader(TrainingManager.ID_TRAININGS_LOADER, null, this);
-
-
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements TrainingOnClickHa
             showEditDialog(0);
 
             //trainingManager.showCreateTrainingDialog();
-           //startActivity(new Intent(this, SettingsActivity.class));
+            //startActivity(new Intent(this, SettingsActivity.class));
             return true;
 
         } else if (id == R.id.menu_settings) {
@@ -76,17 +83,8 @@ public class MainActivity extends AppCompatActivity implements TrainingOnClickHa
         return super.onOptionsItemSelected(item);
     }
 
-//
-//    @Override
-//    public boolean onLongClick(View v) {
-//
-//        long id = (long) v.getTag();
-//
-//        Toast.makeText(v.getContext(),  id+"-id : I'm cklicked", Toast.LENGTH_SHORT).show();
-//        return true;
-//    }
 
-    private void showEditDialog(long id){
+    private void showEditDialog(long id) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {
@@ -95,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements TrainingOnClickHa
         ft.addToBackStack(null);
 
         DialogFragment newFragment = TrainingEditDialog.newInstance();
-        if (id>0) {
+        if (id > 0) {
             Bundle bundle = new Bundle();
             bundle.putLong("id", id);
             newFragment.setArguments(bundle);
@@ -105,27 +103,48 @@ public class MainActivity extends AppCompatActivity implements TrainingOnClickHa
     }
 
 
-
     @Override
     public void onClick(long id) {
-        TrainingItem trainingItem= mTrainingManager.getTraining(id);
+        //TrainingItem trainingItem = mTrainingManager.getTraining(id);
 
-        Toast.makeText(this, id+"-id : name" + trainingItem.getName(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, id + "-id : name" + trainingItem.getName(), Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onLongClick(long id) {
-        TrainingItem trainingItem= mTrainingManager.getTraining(id);
-
-        if (trainingItem == null) {
+        if (id==0) {
+            Toast.makeText(this, "Wrong id: " + id, Toast.LENGTH_SHORT).show();
             return;
         }
         showEditDialog(id);
 
-        //Toast.makeText(this, id+"-id : longclick name " + trainingItem.getName(), Toast.LENGTH_SHORT).show();
+
     }
 
 
+    @Override
+    public void onRefresh() {
 
+    }
 }
+
+//    private class stubLoaderCallbacks implements LoaderManager.LoaderCallbacks<ArrayList<TrainingItem>>{
+//
+//
+//        @Override
+//        public android.support.v4.content.Loader<ArrayList<TrainingItem>> onCreateLoader(int id, Bundle args) {
+//            if (id==ID_LOADER) return new TrainingLoader(MainActivity.this);
+//            return null;
+//        }
+//
+//        @Override
+//        public void onLoadFinished(android.support.v4.content.Loader<ArrayList<TrainingItem>> loader, ArrayList<TrainingItem> data) {
+//            Toast.makeText(MainActivity.this, "loaded", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        @Override
+//        public void onLoaderReset(android.support.v4.content.Loader<ArrayList<TrainingItem>> loader) {
+//
+//        }
+//    }

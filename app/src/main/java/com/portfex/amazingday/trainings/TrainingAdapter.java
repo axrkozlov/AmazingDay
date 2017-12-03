@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.portfex.amazingday.Model.TrainingsChangedCallback;
+import com.portfex.amazingday.Model.TrainingsCallback;
 import com.portfex.amazingday.Model.TrainingItem;
 import com.portfex.amazingday.R;
 import com.portfex.amazingday.utilites.DateUtils;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by alexanderkozlov on 11/16/17.
  */
 
-public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingViewHolder> implements TrainingsChangedCallback {
+public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingViewHolder> implements TrainingsCallback {
 
 //    private Cursor mCursor;
     private Context mContext;
@@ -80,7 +80,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
     }
 
     @Override
-    public void updateTrainingsList(ArrayList<TrainingItem> trainings) {
+    public void refreshView(ArrayList<TrainingItem> trainings) {
         this.mTrainings = trainings;
         if (mTrainings != null) {
             this.notifyDataSetChanged();

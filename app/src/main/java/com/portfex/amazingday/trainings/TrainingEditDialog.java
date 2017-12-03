@@ -14,6 +14,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.portfex.amazingday.Model.TrainingItem;
+import com.portfex.amazingday.Model.TrainingManager;
 import com.portfex.amazingday.R;
 import com.portfex.amazingday.utilites.DateUtils;
 
@@ -26,7 +27,8 @@ import java.util.Calendar;
 
 public class TrainingEditDialog extends DialogFragment implements View.OnClickListener {
 
-    private TrainingManager trainingManager;
+    private TrainingManager mTrainingManager;
+    private TrainingItem mTrainingOld;
     private View mTrainingCreateView;
     private Boolean startTimeChanged;
     private Button mEditCreate;
@@ -62,7 +64,7 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
         mTrainingCreateView = inflater.inflate(R.layout.training_item_edit, null);
-        trainingManager=TrainingManager.getInstance();
+        mTrainingManager = TrainingManager.getInstance(getContext().getApplicationContext());
 
         startTimeChanged = false;
         mEditCreate = mTrainingCreateView.findViewById(R.id.bt_training_create);
@@ -80,13 +82,15 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
         mEditDay6 = mTrainingCreateView.findViewById(R.id.tb_day6);
         mEditDay7 = mTrainingCreateView.findViewById(R.id.tb_day7);
 
-        if (mId>0) {
-
-            mEditCreate.setVisibility(View.GONE);
-            mEditUpdate.setVisibility(View.VISIBLE);
-            mEditDuplicate.setVisibility(View.VISIBLE);
-            mEditDelete.setVisibility(View.VISIBLE);
-            bindTrainingToView();
+        if (mId > 0) {
+            mTrainingOld = mTrainingManager.getTraining(mId);
+            if (mTrainingOld != null) {
+                mEditCreate.setVisibility(View.GONE);
+                mEditUpdate.setVisibility(View.VISIBLE);
+                mEditDuplicate.setVisibility(View.VISIBLE);
+                mEditDelete.setVisibility(View.VISIBLE);
+                bindTrainingToEdit();
+            }
         }
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
@@ -110,27 +114,30 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
         switch (v.getId()) {
             case R.id.bt_training_create:
                 createTraining();
-                mTrainingCreateDialog.dismiss();
                 break;
             case R.id.bt_training_create_start_time:
                 showTimePickerDialog();
                 break;
+            case R.id.bt_training_update:
+                updateTraining();
+                break;
+
             case R.id.bt_training_delete:
                 removeTraining();
-                mTrainingCreateDialog.dismiss();
                 break;
+
         }
     }
 
-    private void bindTrainingToView(){
-        TrainingItem training= trainingManager.getTraining(mId);
-        if (training == null) {
+    private void bindTrainingToEdit() {
+
+        if (mTrainingOld == null) {
             return;
         }
-        mEditName.setText(training.getName());
-        mEditDesc.setText(training.getDescription());
+        mEditName.setText(mTrainingOld.getName());
+        mEditDesc.setText(mTrainingOld.getDescription());
 
-        ArrayList<Boolean> weekDays =DateUtils.parseWeekDays(training.getWeekDaysComposed());
+        ArrayList<Boolean> weekDays = DateUtils.parseWeekDays(mTrainingOld.getWeekDaysComposed());
         mEditDay1.setChecked(weekDays.get(0));
         mEditDay2.setChecked(weekDays.get(1));
         mEditDay3.setChecked(weekDays.get(2));
@@ -139,23 +146,43 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
         mEditDay6.setChecked(weekDays.get(5));
         mEditDay7.setChecked(weekDays.get(6));
 
-        long startTimeLong =training.getStartTime();
-        if (startTimeLong>0) {
+        long startTimeLong = mTrainingOld.getStartTime();
+        if (startTimeLong > 0) {
             mEditStartTime.setText(DateUtils.getTimeString(startTimeLong));
         }
 
     }
 
-    private void createTraining(){
+    private void createTraining() {
         if (mEditName.getText().length() == 0) {
             Toast.makeText(getContext(), "Please, type Name of workout", Toast.LENGTH_SHORT).show();
             return;
         }
+        TrainingItem training =fill(new TrainingItem());
+        mTrainingManager.insertTraining(training);
+        mTrainingCreateDialog.dismiss();
+    }
 
-        TrainingItem training= new TrainingItem();
+    private void updateTraining() {
+        if (mId == 0) {
+            return;
+        }
+        if (mEditName.getText().length() == 0) {
+            Toast.makeText(getContext(), "Please, type Name of workout", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        TrainingItem training =fill(new TrainingItem(mId));
+        mTrainingManager.updateTraining(training);
+        mTrainingCreateDialog.dismiss();
+    }
+
+
+    private TrainingItem fill(TrainingItem training) {
+        if (training == null) {
+            return null;
+        }
         training.setName(mEditName.getText().toString());
         training.setDescription(mEditDesc.getText().toString());
-
         ArrayList<Boolean> weekDays = new ArrayList<>();
         weekDays.add(mEditDay1.isChecked());
         weekDays.add(mEditDay2.isChecked());
@@ -171,17 +198,15 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
             long startTimeLong = DateUtils.getTimeMillis(mEditStartTime.getText().toString());
             training.setStartTime(startTimeLong);
         }
-
-        trainingManager.insertTraining(training);
-
-    }
-
-    private void removeTraining(){
-        Boolean result= trainingManager.removeTraining(mId);
-        if (result) Toast.makeText(getContext(), "Removing complete", Toast.LENGTH_SHORT).show();
+        return training;
 
     }
 
+
+    private void removeTraining() {
+        mTrainingManager.removeTraining(mId);
+        mTrainingCreateDialog.dismiss();
+    }
 
 
     public void showTimePickerDialog() {

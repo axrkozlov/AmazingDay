@@ -13,6 +13,8 @@ public class TrainingItem {
     private Long lastDate;
     private Integer weekDaysComposed;
 
+    private Boolean isChecked=false;
+
     public TrainingItem() {
     }
 
@@ -76,4 +78,17 @@ public class TrainingItem {
     public void setWeekDaysComposed(Integer weekDaysComposed) {
         this.weekDaysComposed = weekDaysComposed;
     }
+
+    public void check(){
+        isChecked=true;
+    }
+
+    public void unCheck(){
+        isChecked=false;
+    }
+
+    public Boolean isCheched(){
+        return isChecked;
+    }
+
 }

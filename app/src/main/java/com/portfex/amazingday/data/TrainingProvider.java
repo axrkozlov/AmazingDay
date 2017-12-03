@@ -1,12 +1,16 @@
 package com.portfex.amazingday.data;
 
+import android.annotation.TargetApi;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import static com.portfex.amazingday.data.TrainingContract.*;
 import static com.portfex.amazingday.data.TrainingContract.TrainingEntry.*;
@@ -37,6 +41,7 @@ public class TrainingProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mDbHelper = new TrainingDbHelper(getContext());
+        FakeData.insertFakeData(mDbHelper.getWritableDatabase());///////////////////////////////////////////!!!!!!!
         return true;
     }
 
@@ -81,25 +86,39 @@ public class TrainingProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        return null;
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        long numRowsInserted=0;
+        switch (sUriMatcher.match(uri)) {
+            case TRAININGS:
+                try {
+                    numRowsInserted = db.insert(TrainingContract.TrainingEntry.TRAININGS_TABLE_NAME, null, values);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+        }
+        if (numRowsInserted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return uri;
     }
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
         int numRowsDeleted;
 
-        if (null == selection) selection = "1";
-
         switch (sUriMatcher.match(uri)) {
 
-            case TRAININGS:
+            case TRAINING_ID:
+
+                String id = uri.getLastPathSegment();
+                String[] args = {id};
+                Log.d("delete", "URI_TRAINING_ID, " + id);
                 numRowsDeleted = mDbHelper.getWritableDatabase().delete(
                         TRAININGS_TABLE_NAME,
-                        selection,
-                        selectionArgs);
-
+                        TrainingContract.TrainingEntry._ID + " = ? ",
+                        args);
                 break;
-
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -113,6 +132,32 @@ public class TrainingProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int numRowsUpdated=0;
+        switch (sUriMatcher.match(uri)) {
+            case TRAINING_ID:
+                String id = uri.getLastPathSegment();
+                String[] args = {id};
+                Log.d("update", "URI_TRAINING_ID, " + id);
+
+                try {
+                    numRowsUpdated = db.update(TrainingContract.TrainingEntry.TRAININGS_TABLE_NAME, values,
+                            TrainingContract.TrainingEntry._ID + " = ? ", args);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+        }
+        if (numRowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return numRowsUpdated;
+    }
+
+    @Override
+    @TargetApi(11)
+    public void shutdown() {
+        mDbHelper.close();
+        super.shutdown();
     }
 }

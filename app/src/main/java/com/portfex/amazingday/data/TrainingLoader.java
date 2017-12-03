@@ -1,14 +1,12 @@
 package com.portfex.amazingday.data;
 
-import android.content.AsyncTaskLoader;
-import android.content.ContentResolver;
+
 import android.content.Context;
-import android.content.Loader;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.net.Uri;
-import android.os.CancellationSignal;
-import android.os.OperationCanceledException;
-import android.support.v4.content.CursorLoader;
+import android.os.SystemClock;
+import android.support.v4.content.AsyncTaskLoader;
 
 import com.portfex.amazingday.Model.TrainingItem;
 
@@ -27,42 +25,76 @@ public class TrainingLoader extends AsyncTaskLoader<ArrayList<TrainingItem>> {
     String mSortOrder;
 
     Cursor mCursor;
+    ArrayList<TrainingItem> mTrainings;
+    final ForceLoadContentObserver mObserver;
+
+    public TrainingLoader(Context context) {
+        super(context);
+        mObserver = new ForceLoadContentObserver();
+    }
 
     public TrainingLoader(Context context, Uri uri, String[] projection, String selection,
-                        String[] selectionArgs, String sortOrder) {
+                          String[] selectionArgs, String sortOrder) {
         super(context);
         mUri = uri;
         mProjection = projection;
         mSelection = selection;
         mSelectionArgs = selectionArgs;
         mSortOrder = sortOrder;
+        mObserver = new ForceLoadContentObserver();
+    }
+
+    @Override
+    protected void onStartLoading() {
+        super.onStartLoading();
+        forceLoad();
     }
 
     @Override
     public ArrayList<TrainingItem> loadInBackground() {
-
-
-        Cursor cursor =getContext().getContentResolver().query(
-                TrainingContract.TrainingEntry.CONTENT_URI,
-                null,
-                null,
-                null,
-                null
-        );
-        ArrayList<TrainingItem> allTrainings = new ArrayList<>();
-        while (cursor.moveToNext())
-        {
-            TrainingItem trainingItem = new TrainingItem(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry._ID)));
-            trainingItem.setName(cursor.getString(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
-            trainingItem.setDescription(cursor.getString(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
-            trainingItem.setStartTime(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
-            trainingItem.setTotalTime(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
-            trainingItem.setLastDate(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
-            trainingItem.setWeekDaysComposed(cursor.getInt(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
+        //SystemClock.sleep(2000);
+        try {
+            mCursor = getContext().getContentResolver().query(
+                    TrainingContract.TrainingEntry.CONTENT_URI,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+            if (mCursor != null) {
+                try {
+                    // Ensure the cursor window is filled.
+                    mCursor.getCount();
+                    mCursor.registerContentObserver(mObserver);
+                } catch (RuntimeException ex) {
+                    mCursor.close();
+                    throw ex;
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
-        return allTrainings;
+            mTrainings = new ArrayList<>();
+        while (mCursor.moveToNext())
+        {
+            TrainingItem trainingItem = new TrainingItem(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry._ID)));
+            trainingItem.setName(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
+            trainingItem.setDescription(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
+            trainingItem.setStartTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
+            trainingItem.setTotalTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
+            trainingItem.setLastDate(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
+            trainingItem.setWeekDaysComposed(mCursor.getInt(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
+            mTrainings.add(trainingItem);
+        }
+        return mTrainings;
     }
+
+
+
+
 }
+
+
 
 
 //    @Override
@@ -92,18 +124,5 @@ public class TrainingLoader extends AsyncTaskLoader<ArrayList<TrainingItem>> {
 //        mCursor.close();
 //        return allTrainings;
 //    }
-
-    /**
-     * Stores away the application context associated with context.
-     * Since Loaders can be used across multiple activities it's dangerous to
-     * store the context directly; always use {@link #getContext()} to retrieve
-     * the Loader's Context, don't use the constructor argument directly.
-     * The Context returned by {@link #getContext} is safe to use across
-     * Activity instances.
-     *
-     * @param context used to retrieve the application context.
-     */
-
-
 
 

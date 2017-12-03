@@ -1,8 +1,8 @@
-package com.portfex.amazingday.trainings;
+package com.portfex.amazingday.old;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.CursorLoader;
 import android.database.Cursor;
@@ -11,9 +11,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.widget.Toast;
 
 import com.portfex.amazingday.Model.TrainingItem;
-import com.portfex.amazingday.Model.TrainingsChangedCallback;
+import com.portfex.amazingday.Model.TrainingsCallback;
 import com.portfex.amazingday.data.FakeData;
 import com.portfex.amazingday.data.TrainingContract;
 import com.portfex.amazingday.data.TrainingDbHelper;
@@ -25,20 +26,21 @@ import java.util.List;
  * Created by alexanderkozlov on 11/28/17.
  */
 
-public class TrainingManager extends Fragment implements
+public class TrainingManager_test1 extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final int ID_TRAININGS_LOADER = 41;
-    private static TrainingManager instance;
-    private TrainingsChangedCallback mCallback;
+    private static final int ID_TRAININGS_LOADER = 41;
+    public static final String TAG="TrainingManager_test1";
+    private static TrainingManager_test1 instance;
+    private TrainingsCallback mCallback;
     private SQLiteDatabase wDb;
     private SQLiteDatabase rDb;
 
-    private Context mContext;
     private TrainingDbHelper dhHelper;
     private Cursor mCursor;
+    private ArrayList<TrainingItem> mTrainings;
 
-//    public TrainingManager(Context context) {
+//    public TrainingManager_test1(Context context) {
 //        this.mContext=context;
 //        dhHelper = new TrainingDbHelper(mContext);
 //        wDb = dhHelper.getWritableDatabase();
@@ -48,14 +50,36 @@ public class TrainingManager extends Fragment implements
 //
 //    }
 
-    public static TrainingManager getInstance() {
+    public static TrainingManager_test1 getInstance() {
         if (instance == null) {
-            instance = new TrainingManager();
+            instance = new TrainingManager_test1();
         }
         return instance;
+
     }
 
-    public void setCallback(TrainingsChangedCallback mCallback) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        dhHelper = new TrainingDbHelper(getContext());
+        wDb = dhHelper.getWritableDatabase();
+        rDb = dhHelper.getReadableDatabase();
+        insertFakeData();
+        getLoaderManager().initLoader(ID_TRAININGS_LOADER, null, this);
+        Toast.makeText(getContext(), "createloader", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Toast.makeText(getContext(), "resumeloader", Toast.LENGTH_SHORT).show();
+        mCallback.refreshView(mTrainings);
+    }
+
+    public void setCallback(TrainingsCallback mCallback) {
         this.mCallback = mCallback;
     }
 
@@ -135,7 +159,7 @@ public class TrainingManager extends Fragment implements
 
     public void updateTrainingsView(){
         if (mCallback==null) return;
-        //mCallback.updateTrainingsList(getAllTrainings());
+        //mCallback.refreshView(getAllTrainings());
     }
 
     public Boolean removeTraining(Long id) {
@@ -194,7 +218,7 @@ public class TrainingManager extends Fragment implements
 
                 };
 
-                return new CursorLoader(mContext,
+                return new CursorLoader(getContext(),
                         forecastQueryUri,
                         null,
                         null,
@@ -221,7 +245,8 @@ public class TrainingManager extends Fragment implements
             allTrainings.add(trainingItem);
         }
         if (mCallback==null) return;
-        mCallback.updateTrainingsList(allTrainings);
+        mTrainings=allTrainings;
+        mCallback.refreshView(allTrainings);
     }
 
     @Override
@@ -258,7 +283,7 @@ public class TrainingManager extends Fragment implements
 //            trainingItem.setWeekDaysComposed(data.getInt(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
 //        }
 //        if (mCallback==null) return;
-//        mCallback.updateTrainingsList(allTrainings);
+//        mCallback.refreshView(allTrainings);
 //    }
 //
 //    @Override
