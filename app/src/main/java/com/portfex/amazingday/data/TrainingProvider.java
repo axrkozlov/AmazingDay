@@ -49,7 +49,7 @@ public class TrainingProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         Cursor cursor;
-        switch (sUriMatcher.match(uri)){
+        switch (sUriMatcher.match(uri)) {
             case TRAINING_ID:
                 cursor = mDbHelper.getReadableDatabase().query(
                         TRAININGS_TABLE_NAME,
@@ -87,7 +87,7 @@ public class TrainingProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        long numRowsInserted=0;
+        long numRowsInserted = 0;
         switch (sUriMatcher.match(uri)) {
             case TRAININGS:
                 try {
@@ -133,7 +133,7 @@ public class TrainingProvider extends ContentProvider {
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        int numRowsUpdated=0;
+        int numRowsUpdated = 0;
         switch (sUriMatcher.match(uri)) {
             case TRAINING_ID:
                 String id = uri.getLastPathSegment();

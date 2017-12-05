@@ -1,4 +1,4 @@
-package com.portfex.amazingday.old;
+package com.portfex.amazingday.z_old;
 
 import android.content.ContentValues;
 import android.net.Uri;
@@ -13,8 +13,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.widget.Toast;
 
-import com.portfex.amazingday.Model.TrainingItem;
-import com.portfex.amazingday.Model.TrainingsCallback;
+import com.portfex.amazingday.model.training.Training;
+import com.portfex.amazingday.model.training.TrainingsCallback;
 import com.portfex.amazingday.data.FakeData;
 import com.portfex.amazingday.data.TrainingContract;
 import com.portfex.amazingday.data.TrainingDbHelper;
@@ -30,7 +30,7 @@ public class TrainingManager_test1 extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int ID_TRAININGS_LOADER = 41;
-    public static final String TAG="TrainingManager_test1";
+    public static final String TAG = "TrainingManager_test1";
     private static TrainingManager_test1 instance;
     private TrainingsCallback mCallback;
     private SQLiteDatabase wDb;
@@ -38,7 +38,7 @@ public class TrainingManager_test1 extends Fragment implements
 
     private TrainingDbHelper dhHelper;
     private Cursor mCursor;
-    private ArrayList<TrainingItem> mTrainings;
+    private ArrayList<Training> mTrainings;
 
 //    public TrainingManager_test1(Context context) {
 //        this.mContext=context;
@@ -84,7 +84,6 @@ public class TrainingManager_test1 extends Fragment implements
     }
 
 
-
     public void insertFakeData() {
         FakeData.insertFakeData(wDb);
 
@@ -92,7 +91,7 @@ public class TrainingManager_test1 extends Fragment implements
     }
 
 
-    public TrainingItem getTraining(Long id) {
+    public Training getTraining(Long id) {
         String[] selectionArgs = {id.toString()};
         mCursor = rDb.query(
                 TrainingContract.TrainingEntry.TRAININGS_TABLE_NAME,
@@ -103,19 +102,21 @@ public class TrainingManager_test1 extends Fragment implements
                 null,
                 null
         );
-        if (!mCursor.moveToFirst()){return null;}
-        TrainingItem trainingItem = new TrainingItem(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry._ID)));
-        trainingItem.setName(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
-        trainingItem.setDescription(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
-        trainingItem.setStartTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
-        trainingItem.setTotalTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
-        trainingItem.setLastDate(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
-        trainingItem.setWeekDaysComposed(mCursor.getInt(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
+        if (!mCursor.moveToFirst()) {
+            return null;
+        }
+        Training training = new Training(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry._ID)));
+        training.setName(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
+        training.setDescription(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
+        training.setStartTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
+        training.setTotalTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
+        training.setLastDate(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
+        training.setWeekDaysComposed(mCursor.getInt(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
         mCursor.close();
-        return trainingItem;
+        return training;
     }
 
-    public ArrayList<TrainingItem> getTrainings() {
+    public ArrayList<Training> getTrainings() {
 //        Cursor cursor= new CursorLoader(mContext,
 //                TrainingContract.TrainingEntry.CONTENT_URI,
 //                null,
@@ -123,12 +124,13 @@ public class TrainingManager_test1 extends Fragment implements
 //                null,
 //                null);
 //        return null;
-       return null;
+        return null;
     }
 
-    /** simple load from db
-    */
-    public ArrayList<TrainingItem> getAllTrainings() {
+    /**
+     * simple load from db
+     */
+    public ArrayList<Training> getAllTrainings() {
 
 
         mCursor = rDb.query(
@@ -141,35 +143,35 @@ public class TrainingManager_test1 extends Fragment implements
                 null
         );
 
-        ArrayList<TrainingItem> allTrainings = new ArrayList<>();
+        ArrayList<Training> allTrainings = new ArrayList<>();
 
         while (mCursor.moveToNext()) {
-            TrainingItem trainingItem = new TrainingItem(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry._ID)));
-            trainingItem.setName(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
-            trainingItem.setDescription(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
-            trainingItem.setStartTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
-            trainingItem.setTotalTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
-            trainingItem.setLastDate(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
-            trainingItem.setWeekDaysComposed(mCursor.getInt(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
-            allTrainings.add(trainingItem);
+            Training training = new Training(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry._ID)));
+            training.setName(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
+            training.setDescription(mCursor.getString(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
+            training.setStartTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
+            training.setTotalTime(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
+            training.setLastDate(mCursor.getLong(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
+            training.setWeekDaysComposed(mCursor.getInt(mCursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
+            allTrainings.add(training);
         }
         mCursor.close();
         return allTrainings;
     }
 
-    public void updateTrainingsView(){
-        if (mCallback==null) return;
+    public void updateTrainingsView() {
+        if (mCallback == null) return;
         //mCallback.refreshView(getAllTrainings());
     }
 
     public Boolean removeTraining(Long id) {
 
-        Boolean result= wDb.delete(TrainingContract.TrainingEntry.TRAININGS_TABLE_NAME, TrainingContract.TrainingEntry._ID + "=" + id, null) > 0;
+        Boolean result = wDb.delete(TrainingContract.TrainingEntry.TRAININGS_TABLE_NAME, TrainingContract.TrainingEntry._ID + "=" + id, null) > 0;
         updateTrainingsView();
         return result;
     }
 
-    public void insertTraining(TrainingItem training) {
+    public void insertTraining(Training training) {
 
         if (wDb == null) return;
         if (training == null) return;
@@ -207,7 +209,7 @@ public class TrainingManager_test1 extends Fragment implements
 
             case ID_TRAININGS_LOADER:
                 Uri forecastQueryUri = TrainingContract.TrainingEntry.CONTENT_URI;
-                String[] projection={
+                String[] projection = {
                         TrainingContract.TrainingEntry._ID,
                         TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME,
                         TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION,
@@ -232,20 +234,19 @@ public class TrainingManager_test1 extends Fragment implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        ArrayList<TrainingItem> allTrainings = new ArrayList<>();
-        while (data.moveToNext())
-        {
-            TrainingItem trainingItem = new TrainingItem(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry._ID)));
-            trainingItem.setName(data.getString(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
-            trainingItem.setDescription(data.getString(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
-            trainingItem.setStartTime(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
-            trainingItem.setTotalTime(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
-            trainingItem.setLastDate(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
-            trainingItem.setWeekDaysComposed(data.getInt(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
-            allTrainings.add(trainingItem);
+        ArrayList<Training> allTrainings = new ArrayList<>();
+        while (data.moveToNext()) {
+            Training training = new Training(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry._ID)));
+            training.setName(data.getString(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
+            training.setDescription(data.getString(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
+            training.setStartTime(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
+            training.setTotalTime(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
+            training.setLastDate(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
+            training.setWeekDaysComposed(data.getInt(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
+            allTrainings.add(training);
         }
-        if (mCallback==null) return;
-        mTrainings=allTrainings;
+        if (mCallback == null) return;
+        mTrainings = allTrainings;
         mCallback.refreshView(allTrainings);
     }
 
@@ -258,7 +259,7 @@ public class TrainingManager_test1 extends Fragment implements
 //
 //
 //    @Override
-//    public Loader<TrainingItem> onCreateLoader(int id, Bundle args) {
+//    public Loader<Training> onCreateLoader(int id, Bundle args) {
 //        Cursor cursor= new CursorLoader(mContext,
 //                TrainingContract.TrainingEntry.CONTENT_URI,
 //                null,
@@ -270,11 +271,11 @@ public class TrainingManager_test1 extends Fragment implements
 //    }
 
 //    @Override
-//    public void onLoadFinished(Loader<TrainingItem> loader, TrainingItem data) {
-//        ArrayList<TrainingItem> allTrainings = new ArrayList<>();
+//    public void onLoadFinished(Loader<Training> loader, Training data) {
+//        ArrayList<Training> allTrainings = new ArrayList<>();
 //        while (data.moveToNext())
 //        {
-//            TrainingItem trainingItem = new TrainingItem(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry._ID)));
+//            Training trainingItem = new Training(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry._ID)));
 //            trainingItem.setName(data.getString(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
 //            trainingItem.setDescription(data.getString(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
 //            trainingItem.setStartTime(data.getLong(data.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
@@ -287,7 +288,7 @@ public class TrainingManager_test1 extends Fragment implements
 //    }
 //
 //    @Override
-//    public void onLoaderReset(Loader<TrainingItem> loader) {
+//    public void onLoaderReset(Loader<Training> loader) {
 //
 //    }
 

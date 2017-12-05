@@ -3,6 +3,7 @@ package com.portfex.amazingday.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.portfex.amazingday.data.TrainingContract.*;
 
 /**
@@ -19,7 +20,6 @@ public class TrainingDbHelper extends SQLiteOpenHelper {
     public TrainingDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
 
     @Override

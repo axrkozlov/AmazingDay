@@ -1,4 +1,4 @@
-package com.portfex.amazingday.Model;
+package com.portfex.amazingday.model.training;
 
 import java.util.ArrayList;
 
@@ -7,5 +7,5 @@ import java.util.ArrayList;
  */
 
 public interface TrainingsCallback {
-    void refreshView(ArrayList<TrainingItem> trainings);
+    void refreshView(ArrayList<Training> trainings);
 }

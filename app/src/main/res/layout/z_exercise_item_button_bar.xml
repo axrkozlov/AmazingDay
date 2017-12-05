@@ -12,16 +12,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bt_restart"
-        android:background="#00FFFFFF"
-        android:textColor="@color/buttons_text"
+        android:background="@color/exercise_button_background"
+        android:textColor="@color/exercise_button_text"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
         android:id="@+id/bt_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
-        android:textColor="@color/buttons_text"
+        android:background="@color/exercise_button_background"
+        android:textColor="@color/exercise_button_text"
         android:text="@string/bt_start"
         app:layout_constraintEnd_toStartOf="@+id/bt_done"
         app:layout_constraintStart_toEndOf="@+id/bt_restart"/>
@@ -31,8 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bt_done"
-        android:background="#00FFFFFF"
-        android:textColor="@color/buttons_text"
+        android:background="@color/exercise_button_background"
+        android:textColor="@color/exercise_button_text"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

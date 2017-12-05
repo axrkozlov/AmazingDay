@@ -1,10 +1,10 @@
-package com.portfex.amazingday.Model;
+package com.portfex.amazingday.model.training;
 
 /**
  * Created by alexanderkozlov on 11/29/17.
  */
 
-public class TrainingItem {
+public class Training {
     private Long id;
     private String name;
     private String description;
@@ -13,16 +13,16 @@ public class TrainingItem {
     private Long lastDate;
     private Integer weekDaysComposed;
 
-    private Boolean isChecked=false;
+    private Boolean isChecked = false;
 
-    public TrainingItem() {
+    public Training() {
     }
 
-    public TrainingItem(Long id) {
+    public Training(Long id) {
         this.id = id;
     }
 
-    public TrainingItem(Long id, String name) {
+    public Training(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -79,15 +79,15 @@ public class TrainingItem {
         this.weekDaysComposed = weekDaysComposed;
     }
 
-    public void check(){
-        isChecked=true;
+    public void check() {
+        isChecked = true;
     }
 
-    public void unCheck(){
-        isChecked=false;
+    public void unCheck() {
+        isChecked = false;
     }
 
-    public Boolean isCheched(){
+    public Boolean isCheched() {
         return isChecked;
     }
 

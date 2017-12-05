@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp"
-            android:text="@string/training_desc_start_time"
+            android:text="@string/training_null_start_time"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/small_label_text"
             app:layout_constraintBaseline_toBaselineOf="@+id/lb_training_start_time"

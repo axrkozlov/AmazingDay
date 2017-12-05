@@ -1,4 +1,4 @@
-package com.portfex.amazingday.trainings;
+package com.portfex.amazingday.presenters.trainings;
 
 import android.app.TimePickerDialog;
 import android.support.v7.app.AlertDialog;
@@ -13,8 +13,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.portfex.amazingday.Model.TrainingItem;
-import com.portfex.amazingday.Model.TrainingManager;
+import com.portfex.amazingday.model.training.Training;
+import com.portfex.amazingday.model.training.TrainingsManager;
 import com.portfex.amazingday.R;
 import com.portfex.amazingday.utilites.DateUtils;
 
@@ -27,8 +27,8 @@ import java.util.Calendar;
 
 public class TrainingEditDialog extends DialogFragment implements View.OnClickListener {
 
-    private TrainingManager mTrainingManager;
-    private TrainingItem mTrainingOld;
+    private TrainingsManager mTrainingsManager;
+    private Training mTrainingOld;
     private View mTrainingCreateView;
     private Boolean startTimeChanged;
     private Button mEditCreate;
@@ -45,6 +45,7 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
     private ToggleButton mEditDay5;
     private ToggleButton mEditDay6;
     private ToggleButton mEditDay7;
+    private String trainingIdTag;
     private long mId;
     private AlertDialog mTrainingCreateDialog;
 
@@ -55,16 +56,16 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
+        trainingIdTag = getResources().getString(R.string.training_id_tag);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            mId = bundle.getLong("id", 0);
+            mId = bundle.getLong(trainingIdTag, 0);
         }
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        mTrainingCreateView = inflater.inflate(R.layout.training_item_edit, null);
-        mTrainingManager = TrainingManager.getInstance(getContext().getApplicationContext());
+        mTrainingCreateView = inflater.inflate(R.layout.activity_training_edit, null);
+        mTrainingsManager = TrainingsManager.getInstance(getContext().getApplicationContext());
 
         startTimeChanged = false;
         mEditCreate = mTrainingCreateView.findViewById(R.id.bt_training_create);
@@ -83,7 +84,7 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
         mEditDay7 = mTrainingCreateView.findViewById(R.id.tb_day7);
 
         if (mId > 0) {
-            mTrainingOld = mTrainingManager.getTraining(mId);
+            mTrainingOld = mTrainingsManager.getTraining(mId);
             if (mTrainingOld != null) {
                 mEditCreate.setVisibility(View.GONE);
                 mEditUpdate.setVisibility(View.VISIBLE);
@@ -158,8 +159,8 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
             Toast.makeText(getContext(), "Please, type Name of workout", Toast.LENGTH_SHORT).show();
             return;
         }
-        TrainingItem training =fill(new TrainingItem());
-        mTrainingManager.insertTraining(training);
+        Training training = fill(new Training());
+        mTrainingsManager.insertTraining(training);
         mTrainingCreateDialog.dismiss();
     }
 
@@ -171,13 +172,13 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
             Toast.makeText(getContext(), "Please, type Name of workout", Toast.LENGTH_SHORT).show();
             return;
         }
-        TrainingItem training =fill(new TrainingItem(mId));
-        mTrainingManager.updateTraining(training);
+        Training training = fill(new Training(mId));
+        mTrainingsManager.updateTraining(training);
         mTrainingCreateDialog.dismiss();
     }
 
 
-    private TrainingItem fill(TrainingItem training) {
+    private Training fill(Training training) {
         if (training == null) {
             return null;
         }
@@ -204,7 +205,7 @@ public class TrainingEditDialog extends DialogFragment implements View.OnClickLi
 
 
     private void removeTraining() {
-        mTrainingManager.removeTraining(mId);
+        mTrainingsManager.removeTraining(mId);
         mTrainingCreateDialog.dismiss();
     }
 

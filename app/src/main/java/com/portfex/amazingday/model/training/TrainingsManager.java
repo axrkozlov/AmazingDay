@@ -1,42 +1,39 @@
-package com.portfex.amazingday.Model;
+package com.portfex.amazingday.model.training;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.widget.Toast;
 
 import com.portfex.amazingday.data.TrainingContract;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by alexanderkozlov on 12/3/17.
  */
 
-public class TrainingManager implements LoaderManager.LoaderCallbacks<Cursor> {
+public class TrainingsManager implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final int ID_LOADER = 41;
-    private static TrainingManager instance;
+    private static TrainingsManager instance;
     Context mContext;
     TrainingsCallback mCallback;
-    ArrayList<TrainingItem> mTrainings;
+    ArrayList<Training> mTrainings;
     Cursor mCursor;
 
-    public TrainingManager(Context context) {
+    public TrainingsManager(Context context) {
         this.mContext = context;
 
     }
 
-    public static TrainingManager getInstance(Context context) {
+    public static TrainingsManager getInstance(Context context) {
         if (instance == null) {
-            instance = new TrainingManager(context);
+            instance = new TrainingsManager(context);
         }
         return instance;
 
@@ -46,17 +43,17 @@ public class TrainingManager implements LoaderManager.LoaderCallbacks<Cursor> {
         this.mCallback = mCallback;
     }
 
-    public TrainingItem getTraining(Long id) {
+    public Training getTraining(Long id) {
         if (mTrainings == null) {
             return null;
         }
-        for (TrainingItem training : mTrainings) {
+        for (Training training : mTrainings) {
             if (training.getId().equals(id)) return training;
         }
         return null;
     }
 
-    public void insertTraining(TrainingItem training) {
+    public void insertTraining(Training training) {
 
         if (training == null) return;
         Uri uri = TrainingContract.TrainingEntry.CONTENT_URI;
@@ -67,12 +64,12 @@ public class TrainingManager implements LoaderManager.LoaderCallbacks<Cursor> {
         cv.put(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT, training.getWeekDaysComposed());
         cv.put(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME, training.getStartTime());
 
-        mContext.getContentResolver().insert(uri,cv);
+        mContext.getContentResolver().insert(uri, cv);
 
     }
 
 
-    public void updateTraining(TrainingItem training) {
+    public void updateTraining(Training training) {
 
         if (training == null) return;
         Uri uri = TrainingContract.TrainingEntry.CONTENT_URI
@@ -84,7 +81,7 @@ public class TrainingManager implements LoaderManager.LoaderCallbacks<Cursor> {
         cv.put(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT, training.getWeekDaysComposed());
         cv.put(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME, training.getStartTime());
 
-        mContext.getContentResolver().update(uri,cv,null,null);
+        mContext.getContentResolver().update(uri, cv, null, null);
 
     }
 
@@ -104,7 +101,6 @@ public class TrainingManager implements LoaderManager.LoaderCallbacks<Cursor> {
     }
 
 
-
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor == null) {
@@ -118,14 +114,14 @@ public class TrainingManager implements LoaderManager.LoaderCallbacks<Cursor> {
 
         mTrainings = new ArrayList<>();
         while (cursor.moveToNext()) {
-            TrainingItem trainingItem = new TrainingItem(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry._ID)));
-            trainingItem.setName(cursor.getString(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
-            trainingItem.setDescription(cursor.getString(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
-            trainingItem.setStartTime(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
-            trainingItem.setTotalTime(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
-            trainingItem.setLastDate(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
-            trainingItem.setWeekDaysComposed(cursor.getInt(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
-            mTrainings.add(trainingItem);
+            Training training = new Training(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry._ID)));
+            training.setName(cursor.getString(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_NAME)));
+            training.setDescription(cursor.getString(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_DESCRIPTION)));
+            training.setStartTime(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_START_TIME)));
+            training.setTotalTime(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME)));
+            training.setLastDate(cursor.getLong(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_LAST_DATE)));
+            training.setWeekDaysComposed(cursor.getInt(cursor.getColumnIndex(TrainingContract.TrainingEntry.TRAININGS_COLUMN_REPEAT)));
+            mTrainings.add(training);
         }
 
         refreshView();
@@ -137,7 +133,7 @@ public class TrainingManager implements LoaderManager.LoaderCallbacks<Cursor> {
 
     }
 
-    public ArrayList<TrainingItem> getTrainings() {
+    public ArrayList<Training> getTrainings() {
         return mTrainings;
     }
 
@@ -148,16 +144,15 @@ public class TrainingManager implements LoaderManager.LoaderCallbacks<Cursor> {
 }
 
 
-
 //    @Override
-//    public Loader<ArrayList<TrainingItem>> onCreateLoader(int id, Bundle args) {
+//    public Loader<ArrayList<Training>> onCreateLoader(int id, Bundle args) {
 //        if (id==ID_LOADER) return new TrainingLoader(mContext);
 //        return null;
 //    }
 //
 //
 //    @Override
-//    public void onLoadFinished(Loader<ArrayList<TrainingItem>> loader, ArrayList<TrainingItem> data) {
+//    public void onLoadFinished(Loader<ArrayList<Training>> loader, ArrayList<Training> data) {
 //        Toast.makeText(mContext, "loaded", Toast.LENGTH_SHORT).show();
 //        if (mCallback == null) {
 //            return;
@@ -169,6 +164,6 @@ public class TrainingManager implements LoaderManager.LoaderCallbacks<Cursor> {
 //    }
 //
 //    @Override
-//    public void onLoaderReset(Loader<ArrayList<TrainingItem>> loader) {
+//    public void onLoaderReset(Loader<ArrayList<Training>> loader) {
 //
 //    }

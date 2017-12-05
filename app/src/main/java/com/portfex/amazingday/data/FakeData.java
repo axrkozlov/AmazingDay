@@ -28,18 +28,14 @@ public class FakeData {
 
         ContentValues cv = new ContentValues();
 
-        long lastDate_ms=0;
+        long lastDate_ms = 0;
 
 
-
-        try
-        {
-            Date lastDate=new Date();
+        try {
+            Date lastDate = new Date();
             lastDate_ms = lastDate.getTime();
-            Log.e("TESTDATE",lastDate.toString());
-        }
-        catch (ParseException e)
-        {
+            Log.e("TESTDATE", lastDate.toString());
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -48,7 +44,7 @@ public class FakeData {
         cv.put(TrainingEntry.TRAININGS_COLUMN_REPEAT, "1");
         cv.put(TrainingEntry.TRAININGS_COLUMN_START_TIME, lastDate_ms);
         cv.put(TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME, lastDate_ms);
-        cv.put(TrainingEntry.TRAININGS_COLUMN_LAST_DATE,  lastDate_ms);
+        cv.put(TrainingEntry.TRAININGS_COLUMN_LAST_DATE, lastDate_ms);
         list.add(cv);
 
         cv = new ContentValues();
@@ -57,7 +53,7 @@ public class FakeData {
         cv.put(TrainingEntry.TRAININGS_COLUMN_REPEAT, "1");
         cv.put(TrainingEntry.TRAININGS_COLUMN_START_TIME, lastDate_ms);
         cv.put(TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME, lastDate_ms);
-        cv.put(TrainingEntry.TRAININGS_COLUMN_LAST_DATE,  lastDate_ms);
+        cv.put(TrainingEntry.TRAININGS_COLUMN_LAST_DATE, lastDate_ms);
         list.add(cv);
 
         cv = new ContentValues();
@@ -66,26 +62,22 @@ public class FakeData {
         cv.put(TrainingEntry.TRAININGS_COLUMN_REPEAT, "1");
         cv.put(TrainingEntry.TRAININGS_COLUMN_START_TIME, lastDate_ms);
         cv.put(TrainingEntry.TRAININGS_COLUMN_TOTAL_TIME, lastDate_ms);
-        cv.put(TrainingEntry.TRAININGS_COLUMN_LAST_DATE,  lastDate_ms);
+        cv.put(TrainingEntry.TRAININGS_COLUMN_LAST_DATE, lastDate_ms);
         list.add(cv);
 
 
-        try
-        {
+        try {
             db.beginTransaction();
             //clear the table first
-            db.delete (TrainingEntry.TRAININGS_TABLE_NAME,null,null);
+            db.delete(TrainingEntry.TRAININGS_TABLE_NAME, null, null);
             //go through the list and add one by one
-            for(ContentValues c:list){
+            for (ContentValues c : list) {
                 db.insert(TrainingEntry.TRAININGS_TABLE_NAME, null, c);
             }
             db.setTransactionSuccessful();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             //too bad :(
-        }
-        finally
-        {
+        } finally {
             db.endTransaction();
         }
     }

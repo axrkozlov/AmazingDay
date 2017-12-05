@@ -1,4 +1,4 @@
-package com.portfex.amazingday.trainings;
+package com.portfex.amazingday.presenters.trainings;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.portfex.amazingday.Model.TrainingsCallback;
-import com.portfex.amazingday.Model.TrainingItem;
+import com.portfex.amazingday.model.training.TrainingsCallback;
+import com.portfex.amazingday.model.training.Training;
 import com.portfex.amazingday.R;
 import com.portfex.amazingday.utilites.DateUtils;
 
@@ -19,15 +19,14 @@ import java.util.ArrayList;
  * Created by alexanderkozlov on 11/16/17.
  */
 
-public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.TrainingViewHolder> implements TrainingsCallback {
+public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.TrainingViewHolder> implements TrainingsCallback {
 
-//    private Cursor mCursor;
     private Context mContext;
-    private ArrayList<TrainingItem> mTrainings;
-    private TrainingOnClickHandler mClickHandler;
+    private ArrayList<Training> mTrainings;
+    private TrainingClickHandler mTrainingClickHandler;
 
-    public TrainingAdapter(Context context,TrainingOnClickHandler clickHandler) {
-        this.mClickHandler=clickHandler;
+    public TrainingsAdapter(Context context, TrainingClickHandler trainingClickHandler) {
+        this.mTrainingClickHandler = trainingClickHandler;
         this.mContext = context;
     }
 
@@ -36,7 +35,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
     public TrainingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.training_item, parent, false);
-        TrainingViewHolder  viewHolder = new TrainingViewHolder(view);
+        TrainingViewHolder viewHolder = new TrainingViewHolder(view);
 
         return viewHolder;
 
@@ -45,29 +44,28 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
     @Override
     public void onBindViewHolder(TrainingViewHolder holder, int position) {
 
-        TrainingItem trainingItem = mTrainings.get(position);
-        if (trainingItem == null) {
+        Training training = mTrainings.get(position);
+        if (training == null) {
             return;
         }
 
-        holder.nameView.setText(trainingItem.getName());
-        holder.descView.setText(trainingItem.getDescription());
+        holder.nameView.setText(training.getName());
+        holder.descView.setText(training.getDescription());
 
-        String[] weekDaysText= DateFormatSymbols.getInstance().getShortWeekdays();
-        ArrayList<Boolean> weekDays = DateUtils.parseWeekDays(trainingItem.getWeekDaysComposed());
+        String[] weekDaysText = DateFormatSymbols.getInstance().getShortWeekdays();
+        ArrayList<Boolean> weekDays = DateUtils.parseWeekDays(training.getWeekDaysComposed());
         StringBuffer sb = new StringBuffer("");
 
         for (int i = 0; i < 7; i++) {
-            if (weekDays.get(i)){
-                sb.append( weekDaysText[i+1]+" ");
+            if (weekDays.get(i)) {
+                sb.append(weekDaysText[i + 1] + " ");
             }
         }
 
         holder.daysView.setText(sb.toString());
-        holder.startTimeView.setText(DateUtils.getTimeString(trainingItem.getStartTime()));
-        holder.totalTimeView.setText(DateUtils.getTimeString(trainingItem.getTotalTime()));
-        holder.itemView.setTag(trainingItem.getId());
-
+        holder.startTimeView.setText(DateUtils.getTimeString(training.getStartTime()));
+        holder.totalTimeView.setText(DateUtils.getTimeString(training.getTotalTime()));
+        holder.itemView.setTag(training.getId());
 
     }
 
@@ -80,7 +78,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
     }
 
     @Override
-    public void refreshView(ArrayList<TrainingItem> trainings) {
+    public void refreshView(ArrayList<Training> trainings) {
         this.mTrainings = trainings;
         if (mTrainings != null) {
             this.notifyDataSetChanged();
@@ -108,13 +106,13 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
 
         @Override
         public void onClick(View v) {
-            mClickHandler.onClick((long) v.getTag());
+            mTrainingClickHandler.onTrainingClick((long) v.getTag());
         }
 
         @Override
         public boolean onLongClick(View v) {
 
-            mClickHandler.onLongClick((long) v.getTag());
+            mTrainingClickHandler.onTrainingLongClick((long) v.getTag());
 
             //int adapterPosition = getAdapterPosition();
             //Toast.makeText(v.getContext(), adapterPosition+"-pos", Toast.LENGTH_SHORT).show();
@@ -123,9 +121,8 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
     }
 
 
-
 //        @Override
-//        public boolean onLongClick(View v) {
+//        public boolean onTrainingLongClick(View v) {
 //            int adapterPosition = getAdapterPosition();
 //
 //            long id = (long) v.getTag();
@@ -153,7 +150,7 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.Traini
 //        }
 
 
-//    public void refreshAdapter(ArrayList<TrainingItem> allTrainings) {
+//    public void refreshAdapter(ArrayList<Training> allTrainings) {
 //        this.mTrainings = allTrainings;
 //        if (allTrainings != null) {
 //            this.notifyDataSetChanged();

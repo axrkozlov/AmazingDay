@@ -140,7 +140,7 @@
         android:background="@color/transparent"
         android:minHeight="0dp"
         android:minWidth="0dp"
-        android:text="@string/training_desc_start_time"
+        android:text="@string/training_null_start_time"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lb_training_create_start_time" />

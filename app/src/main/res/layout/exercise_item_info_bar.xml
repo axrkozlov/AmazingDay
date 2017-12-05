@@ -198,6 +198,38 @@
         app:layout_constraintBottom_toBottomOf="@+id/card_norm_time"
         app:layout_constraintEnd_toEndOf="@+id/card_norm_time" />
 
+    <Button
+        android:id="@+id/bt_restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/bt_restart"
+        android:background="@color/exercise_button_background"
+        android:textColor="@color/exercise_button_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_sets"/>
 
+    <Button
+        android:id="@+id/bt_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/exercise_button_background"
+        android:textColor="@color/exercise_button_text"
+        android:text="@string/bt_start"
+        app:layout_constraintEnd_toStartOf="@+id/bt_done"
+        app:layout_constraintStart_toEndOf="@+id/bt_restart"
+        app:layout_constraintTop_toBottomOf="@+id/card_sets"/>
+
+    <Button
+        android:id="@+id/bt_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/bt_done"
+        android:background="@color/exercise_button_background"
+        android:textColor="@color/exercise_button_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_sets"/>
 
 </android.support.constraint.ConstraintLayout>
