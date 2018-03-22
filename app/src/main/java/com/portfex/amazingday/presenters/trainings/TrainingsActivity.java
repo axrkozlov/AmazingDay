@@ -25,7 +25,7 @@ import com.portfex.amazingday.presenters.exercises.ExercisesActivity;
 
 import static com.portfex.amazingday.model.training.TrainingsManager.ID_LOADER;
 
-
+//BranchOne
 public class TrainingsActivity extends AppCompatActivity implements TrainingClickHandler, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private RecyclerView mTrainingsRecyclerView;
@@ -40,7 +40,7 @@ public class TrainingsActivity extends AppCompatActivity implements TrainingClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainings);
         getSupportActionBar().setElevation(0);
-
+        Toast.makeText(this, "BranchOne", Toast.LENGTH_SHORT).show();
         trainingIdTag = getResources().getString(R.string.training_id_tag);
 
         FloatingActionButton fab_add = findViewById(R.id.fab_add_training);
