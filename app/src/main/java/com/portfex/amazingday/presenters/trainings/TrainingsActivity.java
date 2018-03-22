@@ -25,7 +25,7 @@ import com.portfex.amazingday.presenters.exercises.ExercisesActivity;
 
 import static com.portfex.amazingday.model.training.TrainingsManager.ID_LOADER;
 
-
+//Try to FORK
 public class TrainingsActivity extends AppCompatActivity implements TrainingClickHandler, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private RecyclerView mTrainingsRecyclerView;
